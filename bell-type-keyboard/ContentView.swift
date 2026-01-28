@@ -7,15 +7,43 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct ContentView: View {
+    init() {
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = UIColor(RetroTheme.bodyBackground)
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor(RetroTheme.displayTextDim)
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
+            .foregroundColor: UIColor(RetroTheme.displayTextDim),
+            .font: UIFont.monospacedSystemFont(ofSize: 10, weight: .medium)
+        ]
+        appearance.stackedLayoutAppearance.selected.iconColor = UIColor(RetroTheme.accentGreen)
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
+            .foregroundColor: UIColor(RetroTheme.accentGreen),
+            .font: UIFont.monospacedSystemFont(ofSize: 10, weight: .bold)
+        ]
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            OnboardingView()
+                .tabItem {
+                    Label("SETUP", systemImage: "gearshape.fill")
+                }
+
+            KeyMapView()
+                .tabItem {
+                    Label("KEYMAP", systemImage: "number.square.fill")
+                }
+
+            DemoView()
+                .tabItem {
+                    Label("DEMO", systemImage: "keyboard.fill")
+                }
         }
-        .padding()
     }
 }
 

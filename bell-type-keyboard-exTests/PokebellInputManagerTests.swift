@@ -101,4 +101,33 @@ final class PokebellInputManagerTests: XCTestCase {
         XCTAssertTrue(cleared)
         XCTAssertEqual(manager.composingText, "")
     }
+
+    /// Verifies that selecting a candidate commits it and clears composing state.
+    ///
+    /// Example:
+    /// ```swift
+    /// let manager = PokebellInputManager(isKeyboardExtension: true, converter: FakeConverter(candidate: "愛"))
+    /// manager.selectCandidate("藍")
+    /// ```
+    func testSelectCandidateCommitsText() {
+        let converter = FakeConverter(candidate: "愛")
+        let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
+
+        var committedText: String?
+        var cleared = false
+
+        manager.onCommitText = { text in
+            committedText = text
+        }
+        manager.onClearMarkedText = {
+            cleared = true
+        }
+
+        manager.selectCandidate("藍")
+
+        XCTAssertEqual(committedText, "藍")
+        XCTAssertTrue(cleared)
+        XCTAssertEqual(manager.composingText, "")
+        XCTAssertEqual(manager.candidates, [])
+    }
 }

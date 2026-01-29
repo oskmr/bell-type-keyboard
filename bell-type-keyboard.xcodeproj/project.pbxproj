@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CB4940A82F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CB4940A12F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5DFB46194ED4FE69FD42D768 /* KanaKanjiConverterModuleWithDefaultDictionary in Frameworks */ = {isa = PBXBuildFile; productRef = AFA898EFBF01A9B32E5BFA6D /* KanaKanjiConverterModuleWithDefaultDictionary */; };
+		CB4940A82F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CB4940A12F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,13 +190,13 @@
 			);
 			mainGroup = CB4940552F2A8B5500AD5DB7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				21C404064002185724A80571 /* XCRemoteSwiftPackageReference "AzooKeyKanaKanjiConverter" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CB49405F2F2A8B5500AD5DB7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
-			packageReferences = (
-				21C404064002185724A80571 /* AzooKeyKanaKanjiConverter */,
-			);
 			targets = (
 				CB49405D2F2A8B5500AD5DB7 /* bell-type-keyboard */,
 				CB4940A02F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */,
@@ -245,25 +245,6 @@
 			targetProxy = CB4940A62F2AF5AF00AD5DB7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		21C404064002185724A80571 /* AzooKeyKanaKanjiConverter */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/azooKey/AzooKeyKanaKanjiConverter";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.11.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		AFA898EFBF01A9B32E5BFA6D /* KanaKanjiConverterModuleWithDefaultDictionary */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 21C404064002185724A80571 /* AzooKeyKanaKanjiConverter */;
-			productName = KanaKanjiConverterModuleWithDefaultDictionary;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CB4940672F2A8B5800AD5DB7 /* Debug */ = {
@@ -562,6 +543,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		21C404064002185724A80571 /* XCRemoteSwiftPackageReference "AzooKeyKanaKanjiConverter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/azooKey/AzooKeyKanaKanjiConverter";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.11.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AFA898EFBF01A9B32E5BFA6D /* KanaKanjiConverterModuleWithDefaultDictionary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 21C404064002185724A80571 /* XCRemoteSwiftPackageReference "AzooKeyKanaKanjiConverter" */;
+			productName = KanaKanjiConverterModuleWithDefaultDictionary;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CB4940562F2A8B5500AD5DB7 /* Project object */;
 }

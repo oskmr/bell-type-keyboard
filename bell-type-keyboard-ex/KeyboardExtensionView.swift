@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+/// KeyboardExtensionView renders the numeric keypad and prediction bar.
+///
+/// Example:
+/// ```swift
+/// KeyboardExtensionView(inputManager: PokebellInputManager(isKeyboardExtension: true))
+/// ```
 struct KeyboardExtensionView: View {
     @ObservedObject var inputManager: PokebellInputManager
 
@@ -17,8 +23,21 @@ struct KeyboardExtensionView: View {
         [0]
     ]
 
+    /// Renders the keyboard layout with optional prediction candidates.
+    ///
+    /// Example:
+    /// ```swift
+    /// KeyboardExtensionView(inputManager: PokebellInputManager(isKeyboardExtension: true)).body
+    /// ```
     var body: some View {
         VStack(spacing: 0) {
+            if !inputManager.candidates.isEmpty {
+                PredictionBarView(candidates: inputManager.candidates) { candidate in
+                    inputManager.selectCandidate(candidate)
+                }
+                .padding(.vertical, 4)
+            }
+
             VStack(spacing: 4) {
                 ForEach(buttons, id: \.self) { row in
                     HStack(spacing: 4) {

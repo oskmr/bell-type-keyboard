@@ -21,6 +21,7 @@ class PokebellInputManager: ObservableObject {
     @Published var currentPreview: String = ""
     @Published var composingText: String = ""
     @Published var currentCandidate: String = ""
+    @Published var candidates: [String] = []
 
     var onTextChange: ((String) -> Void)?
     var onMarkedTextChange: ((String) -> Void)?
@@ -115,6 +116,24 @@ class PokebellInputManager: ObservableObject {
         }
     }
 
+    /// Selects a candidate and commits it immediately.
+    ///
+    /// Example:
+    /// ```swift
+    /// manager.selectCandidate("愛")
+    /// ```
+    /// - Parameter candidate: The candidate text to commit.
+    func selectCandidate(_ candidate: String) {
+        guard isKeyboardExtension else {
+            return
+        }
+
+        currentCandidate = candidate
+        onCommitText?(candidate)
+        onClearMarkedText?()
+        clearComposingState()
+    }
+
     /// Confirms a mapped character and updates composing state.
     ///
     /// Example:
@@ -149,12 +168,14 @@ class PokebellInputManager: ObservableObject {
 
         if composingText.isEmpty {
             currentCandidate = ""
+            candidates = []
             onClearMarkedText?()
             return
         }
 
         let result = converter?.convert(composingText: composingText)
         currentCandidate = result?.candidateText ?? composingText
+        candidates = result?.candidates ?? [composingText]
 
         // Keep marked text as raw composing text to avoid auto-committing conversions.
         onMarkedTextChange?(composingText)
@@ -169,5 +190,6 @@ class PokebellInputManager: ObservableObject {
     private func clearComposingState() {
         composingText = ""
         currentCandidate = ""
+        candidates = []
     }
 }

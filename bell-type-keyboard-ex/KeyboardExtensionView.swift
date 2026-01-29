@@ -19,8 +19,7 @@ struct KeyboardExtensionView: View {
     let buttons: [[Int]] = [
         [1, 2, 3],
         [4, 5, 6],
-        [7, 8, 9],
-        [0]
+        [7, 8, 9]
     ]
 
     /// Renders the keyboard layout with optional prediction candidates.
@@ -30,13 +29,11 @@ struct KeyboardExtensionView: View {
     /// KeyboardExtensionView(inputManager: PokebellInputManager(isKeyboardExtension: true)).body
     /// ```
     var body: some View {
-        VStack(spacing: 0) {
-            if !inputManager.candidates.isEmpty {
-                PredictionBarView(candidates: inputManager.candidates) { candidate in
-                    inputManager.selectCandidate(candidate)
-                }
-                .padding(.vertical, 4)
+        VStack(spacing: 4) {
+            PredictionBarView(candidates: inputManager.candidates) { candidate in
+                inputManager.selectCandidate(candidate)
             }
+            .padding(.vertical, 2)
 
             VStack(spacing: 4) {
                 ForEach(buttons, id: \.self) { row in
@@ -65,6 +62,14 @@ struct KeyboardExtensionView: View {
                     .buttonStyle(CompactRetroButtonStyle())
 
                     Button(action: {
+                        inputManager.pressKey(0)
+                    }) {
+                        Text("0")
+                            .font(.system(size: 24, weight: .bold, design: .monospaced))
+                    }
+                    .buttonStyle(CompactRetroButtonStyle())
+
+                    Button(action: {
                         inputManager.confirmInput()
                     }) {
                         Text("CLR")
@@ -72,8 +77,10 @@ struct KeyboardExtensionView: View {
                     }
                     .buttonStyle(CompactRetroButtonStyle(isSpecial: true))
                 }
+
             }
-            .padding(6)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 4)
             .background(RetroTheme.bodyBackground)
         }
     }

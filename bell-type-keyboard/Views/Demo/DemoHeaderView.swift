@@ -22,7 +22,7 @@ struct DemoHeaderView: View {
     /// ```
     var body: some View {
         VStack(spacing: 16) {
-            Text("POKE-BELL DEMO")
+            Text("POKE-BELL")
                 .font(.system(size: 24, weight: .bold, design: .monospaced))
                 .foregroundColor(RetroTheme.accentGreen)
                 .shadow(color: RetroTheme.accentGreen.opacity(0.5), radius: 5)

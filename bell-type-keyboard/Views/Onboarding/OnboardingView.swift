@@ -21,100 +21,91 @@ struct OnboardingView: View {
     /// OnboardingView().body
     /// ```
     var body: some View {
-        ScrollView {
-            VStack(spacing: 32) {
-                VStack(spacing: 16) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(RetroTheme.displayBackground)
-                            .frame(width: 120, height: 100)
-                            .overlay(
+        RetroTheme.bodyBackground
+            .edgesIgnoringSafeArea(.all)
+            .overlay(
+                VStack {
+                    VStack(spacing: 32) {
+                        VStack(spacing: 16) {
+                            ZStack {
                                 RoundedRectangle(cornerRadius: 12)
-                                    .stroke(RetroTheme.borderColor, lineWidth: 3)
+                                    .fill(RetroTheme.displayBackground)
+                                    .frame(width: 120, height: 100)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(RetroTheme.borderColor, lineWidth: 3)
+                                    )
+                                    .shadow(color: RetroTheme.accentGreen.opacity(0.3), radius: 10)
+                                
+                                Text("📟")
+                                    .font(.system(size: 60))
+                            }
+                        }
+                        .padding(.top, 40)
+                        
+                        VStack(alignment: .leading, spacing: 24) {
+                            HStack {
+                                Text(">> SETUP GUIDE")
+                                    .font(.system(size: 22, weight: .bold, design: .monospaced))
+                                    .foregroundColor(RetroTheme.accentGreen)
+                                Spacer()
+                                Text("■")
+                                    .font(.system(size: 20, design: .monospaced))
+                                    .foregroundColor(RetroTheme.accentGreen)
+                                    .opacity(0.6)
+                            }
+                            .padding(.horizontal)
+                            .padding(.top, 32)
+                            
+                            SetupStepView(
+                                number: 1,
+                                title: "設定アプリを開く",
+                                description: "iPhoneの「設定」アプリを開きます",
+                                icon: "gearshape.fill"
                             )
-                            .shadow(color: RetroTheme.accentGreen.opacity(0.3), radius: 10)
-
-                        Text("📟")
-                            .font(.system(size: 60))
-                    }
-
-                    Text("POKE-BELL")
-                        .font(.system(size: 32, weight: .bold, design: .monospaced))
-                        .foregroundColor(RetroTheme.accentGreen)
-                        .shadow(color: RetroTheme.accentGreen.opacity(0.5), radius: 5)
-
-                    Text(">>> KEYBOARD <<<")
-                        .font(.system(size: 16, weight: .bold, design: .monospaced))
-                        .foregroundColor(RetroTheme.displayText)
-                }
-                .padding(.top, 40)
-
-                VStack(alignment: .leading, spacing: 24) {
-                    HStack {
-                        Text(">> SETUP GUIDE")
-                            .font(.system(size: 22, weight: .bold, design: .monospaced))
-                            .foregroundColor(RetroTheme.accentGreen)
-                        Spacer()
-                        Text("■")
-                            .font(.system(size: 20, design: .monospaced))
-                            .foregroundColor(RetroTheme.accentGreen)
-                            .opacity(0.6)
-                    }
-                    .padding(.horizontal)
-
-                    SetupStepView(
-                        number: 1,
-                        title: "設定アプリを開く",
-                        description: "iPhoneの「設定」アプリを開きます",
-                        icon: "gearshape.fill"
-                    )
-
-                    SetupStepView(
-                        number: 2,
-                        title: "キーボード設定へ移動",
-                        description: "一般 → キーボード → キーボード",
-                        icon: "keyboard.fill"
-                    )
-
-                    SetupStepView(
-                        number: 3,
-                        title: "キーボードを追加",
-                        description: "「新しいキーボードを追加...」をタップして\n「PokebellKeyboard」を選択",
-                        icon: "plus.circle.fill"
-                    )
-
-                    SetupStepView(
-                        number: 4,
-                        title: "キーボードを切り替え",
-                        description: "テキスト入力時に地球儀アイコン🌐を長押しして\n「PokebellKeyboard」を選択",
-                        icon: "globe"
-                    )
-
-                    Button(action: {
-                        if let url = URL(string: "App-Prefs:root=General&path=Keyboard") {
-                            UIApplication.shared.open(url)
-                        }
-                    }) {
-                        HStack {
-                            Text("[")
-                            Image(systemName: "gear")
-                            Text("OPEN SETTINGS")
-                            Text("]")
+                            
+                            SetupStepView(
+                                number: 2,
+                                title: "キーボード設定へ移動",
+                                description: "一般 → キーボード → キーボード",
+                                icon: "keyboard.fill"
+                            )
+                            SetupStepView(
+                                number: 3,
+                                title: "キーボードを追加",
+                                description: "「新しいキーボードを追加」をタップ\n「ベル打ちキーボード」を選択",
+                                icon: "plus.circle.fill"
+                            )
+                            SetupStepView(
+                                number: 4,
+                                title: "キーボードを切り替え",
+                                description: "テキスト入力時に地球儀アイコンを長押しし\n「ベル打ちキーボード」を選択",
+                                icon: "globe"
+                            )
+                            
+                            Button(action: {
+                                if let url = URL(string: "App-Prefs:root=General&path=Keyboard") {
+                                    UIApplication.shared.open(url)
+                                }
+                            }) {
+                                HStack {
+                                    Text("[")
+                                    Image(systemName: "gear")
+                                    Text("OPEN SETTINGS")
+                                    Text("]")
+                                }
+                            }
+                            .buttonStyle(RetroButtonStyle(isSpecial: true))
+                            .padding(.horizontal)
+                            .padding(.top, 8)
                         }
                     }
-                    .buttonStyle(RetroButtonStyle(isSpecial: true))
-                    .padding(.horizontal)
-                    .padding(.top, 8)
                 }
-
-                Text("(C) 2026 POKE-BELL-KB")
-                    .font(.system(size: 12, design: .monospaced))
-                    .foregroundColor(RetroTheme.displayTextDim)
-                    .padding(.bottom, 40)
-            }
-        }
-        .background(RetroTheme.bodyBackground)
+            )
+            .background(RetroTheme.bodyBackground.ignoresSafeArea())
     }
+    
+    
 }
 
 #Preview {

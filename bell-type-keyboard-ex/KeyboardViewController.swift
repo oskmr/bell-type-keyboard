@@ -8,19 +8,55 @@
 import UIKit
 import SwiftUI
 
+/// KeyboardViewController hosts the SwiftUI keyboard extension view.
+///
+/// Example:
+/// ```swift
+/// let controller = KeyboardViewController()
+/// ```
+@MainActor
 class KeyboardViewController: UIInputViewController {
-    private var inputManager = PokebellInputManager(isKeyboardExtension: true)
+    private let converterService = KanaKanjiConverterService()
+    private lazy var inputManager = PokebellInputManager(
+        isKeyboardExtension: true,
+        converter: converterService
+    )
     private var hostingController: UIHostingController<KeyboardExtensionView>?
 
+    /// Updates constraints when the keyboard view changes size.
+    ///
+    /// Example:
+    /// ```swift
+    /// controller.updateViewConstraints()
+    /// ```
     override func updateViewConstraints() {
         super.updateViewConstraints()
     }
 
+    /// Configures callbacks and hosts the SwiftUI keyboard view.
+    ///
+    /// Example:
+    /// ```swift
+    /// controller.viewDidLoad()
+    /// ```
     override func viewDidLoad() {
         super.viewDidLoad()
 
         inputManager.onTextChange = { [weak self] text in
             self?.textDocumentProxy.insertText(text)
+        }
+
+        inputManager.onMarkedTextChange = { [weak self] text in
+            let selectedRange = NSRange(location: text.count, length: 0)
+            self?.textDocumentProxy.setMarkedText(text, selectedRange: selectedRange)
+        }
+
+        inputManager.onCommitText = { [weak self] text in
+            self?.textDocumentProxy.insertText(text)
+        }
+
+        inputManager.onClearMarkedText = { [weak self] in
+            self?.textDocumentProxy.unmarkText()
         }
 
         inputManager.onDeleteBackward = { [weak self] in
@@ -45,14 +81,32 @@ class KeyboardViewController: UIInputViewController {
         hostingController = hosting
     }
 
+    /// Lays out subviews for the keyboard UI.
+    ///
+    /// Example:
+    /// ```swift
+    /// controller.viewWillLayoutSubviews()
+    /// ```
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
 
+    /// Prepares for input changes in the host app.
+    ///
+    /// Example:
+    /// ```swift
+    /// controller.textWillChange(nil)
+    /// ```
     override func textWillChange(_ textInput: UITextInput?) {
         super.textWillChange(textInput)
     }
 
+    /// Responds to changes in the host app's text input.
+    ///
+    /// Example:
+    /// ```swift
+    /// controller.textDidChange(nil)
+    /// ```
     override func textDidChange(_ textInput: UITextInput?) {
         super.textDidChange(textInput)
     }

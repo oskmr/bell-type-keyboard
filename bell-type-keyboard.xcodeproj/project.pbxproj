@@ -6,8 +6,37 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CB4940A82F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CB4940A12F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CB4940A62F2AF5AF00AD5DB7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB4940562F2A8B5500AD5DB7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB4940A02F2AF5AF00AD5DB7;
+			remoteInfo = "bell-type-keyboard-ex";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CB4940AD2F2AF5AF00AD5DB7 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CB4940A82F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		CB49405E2F2A8B5500AD5DB7 /* bell-type-keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bell-type-keyboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB4940A12F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "bell-type-keyboard-ex.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -17,6 +46,13 @@
 				Info.plist,
 			);
 			target = CB49405D2F2A8B5500AD5DB7 /* bell-type-keyboard */;
+		};
+		CB4940AC2F2AF5AF00AD5DB7 /* Exceptions for "bell-type-keyboard-ex" folder in "bell-type-keyboard-ex" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CB4940A02F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -29,10 +65,25 @@
 			path = "bell-type-keyboard";
 			sourceTree = "<group>";
 		};
+		CB4940A22F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CB4940AC2F2AF5AF00AD5DB7 /* Exceptions for "bell-type-keyboard-ex" folder in "bell-type-keyboard-ex" target */,
+			);
+			path = "bell-type-keyboard-ex";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		CB49405B2F2A8B5500AD5DB7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB49409E2F2AF5AF00AD5DB7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -46,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				CB4940602F2A8B5500AD5DB7 /* bell-type-keyboard */,
+				CB4940A22F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */,
 				CB49405F2F2A8B5500AD5DB7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				CB49405E2F2A8B5500AD5DB7 /* bell-type-keyboard.app */,
+				CB4940A12F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,10 +121,12 @@
 				CB49405A2F2A8B5500AD5DB7 /* Sources */,
 				CB49405B2F2A8B5500AD5DB7 /* Frameworks */,
 				CB49405C2F2A8B5500AD5DB7 /* Resources */,
+				CB4940AD2F2AF5AF00AD5DB7 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CB4940A72F2AF5AF00AD5DB7 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				CB4940602F2A8B5500AD5DB7 /* bell-type-keyboard */,
@@ -82,6 +137,28 @@
 			productName = "bell-type-keyboard";
 			productReference = CB49405E2F2A8B5500AD5DB7 /* bell-type-keyboard.app */;
 			productType = "com.apple.product-type.application";
+		};
+		CB4940A02F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB4940A92F2AF5AF00AD5DB7 /* Build configuration list for PBXNativeTarget "bell-type-keyboard-ex" */;
+			buildPhases = (
+				CB49409D2F2AF5AF00AD5DB7 /* Sources */,
+				CB49409E2F2AF5AF00AD5DB7 /* Frameworks */,
+				CB49409F2F2AF5AF00AD5DB7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CB4940A22F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */,
+			);
+			name = "bell-type-keyboard-ex";
+			packageProductDependencies = (
+			);
+			productName = "bell-type-keyboard-ex";
+			productReference = CB4940A12F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -94,6 +171,9 @@
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					CB49405D2F2A8B5500AD5DB7 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
+					CB4940A02F2AF5AF00AD5DB7 = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
 				};
@@ -113,12 +193,20 @@
 			projectRoot = "";
 			targets = (
 				CB49405D2F2A8B5500AD5DB7 /* bell-type-keyboard */,
+				CB4940A02F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		CB49405C2F2A8B5500AD5DB7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB49409F2F2AF5AF00AD5DB7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -135,7 +223,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CB49409D2F2AF5AF00AD5DB7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CB4940A72F2AF5AF00AD5DB7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB4940A02F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */;
+			targetProxy = CB4940A62F2AF5AF00AD5DB7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CB4940672F2A8B5800AD5DB7 /* Debug */ = {
@@ -270,7 +373,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bell-type-keyboard/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ベル打ちキーボード";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,12 +389,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miseri.bell-type-keyboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -304,7 +413,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "bell-type-keyboard/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ベル打ちキーボード";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -318,12 +429,80 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miseri.bell-type-keyboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		CB4940AA2F2AF5AF00AD5DB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 62R8899FU5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "bell-type-keyboard-ex/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ベル打ちキーボード";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.miseri.bell-type-keyboard.ex";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		CB4940AB2F2AF5AF00AD5DB7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 62R8899FU5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "bell-type-keyboard-ex/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "ベル打ちキーボード";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.miseri.bell-type-keyboard.ex";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -344,6 +523,15 @@
 			buildConfigurations = (
 				CB49406A2F2A8B5800AD5DB7 /* Debug */,
 				CB49406B2F2A8B5800AD5DB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB4940A92F2AF5AF00AD5DB7 /* Build configuration list for PBXNativeTarget "bell-type-keyboard-ex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB4940AA2F2AF5AF00AD5DB7 /* Debug */,
+				CB4940AB2F2AF5AF00AD5DB7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

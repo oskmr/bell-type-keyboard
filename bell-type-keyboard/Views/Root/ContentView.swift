@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct ContentView: View {
     init() {
         let appearance = UITabBarAppearance()

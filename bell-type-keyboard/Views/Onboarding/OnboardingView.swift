@@ -7,7 +7,19 @@
 
 import SwiftUI
 
+/// OnboardingView renders the setup guide for the keyboard.
+///
+/// Example:
+/// ```swift
+/// OnboardingView()
+/// ```
 struct OnboardingView: View {
+    /// Renders the onboarding screen layout.
+    ///
+    /// Example:
+    /// ```swift
+    /// OnboardingView().body
+    /// ```
     var body: some View {
         ScrollView {
             VStack(spacing: 32) {
@@ -102,51 +114,6 @@ struct OnboardingView: View {
             }
         }
         .background(RetroTheme.bodyBackground)
-    }
-}
-
-struct SetupStepView: View {
-    let number: Int
-    let title: String
-    let description: String
-    let icon: String
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 16) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 6)
-                    .fill(RetroTheme.displayBackground)
-                    .frame(width: 50, height: 50)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(RetroTheme.accentGreen, lineWidth: 2)
-                    )
-
-                Text("\(number)")
-                    .font(.system(size: 24, weight: .bold, design: .monospaced))
-                    .foregroundColor(RetroTheme.accentGreen)
-            }
-
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 8) {
-                    Image(systemName: icon)
-                        .foregroundColor(RetroTheme.accentGreen)
-                        .font(.system(size: 16))
-
-                    Text(title)
-                        .font(.system(size: 16, weight: .semibold, design: .monospaced))
-                        .foregroundColor(RetroTheme.displayText)
-                }
-
-                Text(description)
-                    .font(.system(size: 14, design: .monospaced))
-                    .foregroundColor(RetroTheme.displayTextDim)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-
-            Spacer()
-        }
-        .padding(.horizontal)
     }
 }
 

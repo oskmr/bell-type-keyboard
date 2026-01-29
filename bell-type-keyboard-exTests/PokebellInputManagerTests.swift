@@ -47,7 +47,7 @@ final class FakeConverter: KanaKanjiConverting {
 
 /// PokebellInputManagerTests validates composing and conversion behavior.
 final class PokebellInputManagerTests: XCTestCase {
-    /// Verifies that composing text updates marked text with the converter candidate.
+    /// Verifies that composing text keeps marked text as raw kana input.
     ///
     /// Example:
     /// ```swift
@@ -55,7 +55,7 @@ final class PokebellInputManagerTests: XCTestCase {
     /// manager.pressKey(1)
     /// manager.pressKey(1)
     /// ```
-    func testPressKeyUpdatesMarkedTextWithCandidate() {
+    func testPressKeyUpdatesMarkedTextWithComposingText() {
         let converter = FakeConverter(candidate: "愛")
         let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
 
@@ -67,7 +67,7 @@ final class PokebellInputManagerTests: XCTestCase {
         manager.pressKey(1)
         manager.pressKey(1)
 
-        XCTAssertEqual(markedText, "愛")
+        XCTAssertEqual(markedText, "あ")
     }
 
     /// Verifies that confirming input commits the candidate and clears composing state.

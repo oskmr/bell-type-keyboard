@@ -135,7 +135,7 @@ class PokebellInputManager: ObservableObject {
         currentPreview = ""
     }
 
-    /// Updates the candidate text and marked text for the current composing string.
+    /// Updates the candidate cache and marked text for the current composing string.
     ///
     /// Example:
     /// ```swift
@@ -154,9 +154,10 @@ class PokebellInputManager: ObservableObject {
         }
 
         let result = converter?.convert(composingText: composingText)
-        let candidate = result?.candidateText ?? composingText
-        currentCandidate = candidate
-        onMarkedTextChange?(candidate)
+        currentCandidate = result?.candidateText ?? composingText
+
+        // Keep marked text as raw composing text to avoid auto-committing conversions.
+        onMarkedTextChange?(composingText)
     }
 
     /// Clears the composing state and candidate cache.

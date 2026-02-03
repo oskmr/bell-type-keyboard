@@ -65,4 +65,18 @@ final class PokebellInputMapperTests: XCTestCase {
         XCTAssertNil(mapper.applyHandakuten(to: "か"))
         XCTAssertNil(mapper.applyHandakuten(to: "あ"))
     }
+
+    func testSymbolMappings() {
+        let mapper = PokebellInputMapper.shared
+
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 6, secondDigit: 7), "？")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 6, secondDigit: 8), "！")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 6, secondDigit: 9), "／")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 7, secondDigit: 6), "￥")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 7, secondDigit: 7), "＆")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 2), "（")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 4), "）")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 6), "＊")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 7), "＃")
+    }
 }

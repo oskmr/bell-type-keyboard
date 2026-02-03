@@ -27,7 +27,9 @@ struct RetroDisplayModifier: ViewModifier {
         content
             .font(.system(size: 18, weight: .medium, design: .monospaced))
             .foregroundColor(RetroTheme.displayText)
-            .padding()
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
+            .padding(.top, 0)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(RetroTheme.displayBackground)
             .overlay(

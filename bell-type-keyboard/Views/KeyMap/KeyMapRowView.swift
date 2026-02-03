@@ -51,15 +51,6 @@ struct KeyMapRowView: View {
                         .font(.system(size: 28, weight: .bold, design: .monospaced))
                         .foregroundColor(RetroTheme.displayText)
                 }
-
-                Image(systemName: "arrow.right")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundColor(RetroTheme.accentGreen)
-
-                Text(rowLabel)
-                    .font(.system(size: 14, weight: .bold, design: .monospaced))
-                    .foregroundColor(RetroTheme.accentGreen)
-
                 Spacer()
             }
 

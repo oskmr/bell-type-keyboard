@@ -42,6 +42,11 @@ class KeyboardViewController: UIInputViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = UIColor(RetroTheme.keyboardSystemBackground)
+        // Remove the system input assistant bar (gray strip above the keyboard).
+        inputAssistantItem.leadingBarButtonGroups = []
+        inputAssistantItem.trailingBarButtonGroups = []
+
         inputManager.onTextChange = { [weak self] text in
             self?.textDocumentProxy.insertText(text)
         }
@@ -65,6 +70,9 @@ class KeyboardViewController: UIInputViewController {
 
         let keyboardView = KeyboardExtensionView(inputManager: inputManager)
         let hosting = UIHostingController(rootView: keyboardView)
+        // Match the host view background to remove any top padding tint mismatch.
+        hosting.view.backgroundColor = UIColor(RetroTheme.keyboardSystemBackground)
+        hosting.view.isOpaque = true
 
         addChild(hosting)
         view.addSubview(hosting.view)

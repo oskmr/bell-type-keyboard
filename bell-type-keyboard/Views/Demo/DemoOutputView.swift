@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// Example:
 /// ```swift
-/// DemoOutputView(displayText: "あい_", previewText: "12")
+/// DemoOutputView(displayText: "あい_", previewText: "12", candidateText: "愛")
 /// ```
 struct DemoOutputView: View {
     let displayText: String
@@ -25,6 +25,7 @@ struct DemoOutputView: View {
     /// ```
     var body: some View {
         let showsPreview = !previewText.isEmpty
+        let panelHeight: CGFloat = 140
 
         VStack(alignment: .leading, spacing: 8) {
             HStack {
@@ -32,12 +33,10 @@ struct DemoOutputView: View {
                     .font(.system(size: 12, weight: .bold, design: .monospaced))
                     .foregroundColor(RetroTheme.displayTextDim)
                 Spacer()
-                if showsPreview {
-                    Text("■")
-                        .font(.system(size: 14, design: .monospaced))
-                        .foregroundColor(RetroTheme.accentGreen)
-                        .opacity(0.8)
-                }
+                Text("■")
+                    .font(.system(size: 14, design: .monospaced))
+                    .foregroundColor(RetroTheme.accentGreen)
+                    .opacity(showsPreview ? 0.8 : 0.0)
             }
             .padding(.horizontal, 4)
 
@@ -47,18 +46,20 @@ struct DemoOutputView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .frame(minHeight: 60)
                 .padding(8)
+                .lineLimit(2)
+                .truncationMode(.tail)
 
-            if showsPreview {
-                HStack {
-                    Text(">> INPUT: [\(previewText)]")
-                        .font(.system(size: 11, design: .monospaced))
-                        .foregroundColor(RetroTheme.accentGreen)
-                    Spacer()
-                }
-                .padding(.horizontal, 4)
+            HStack {
+                Text(">> INPUT: [\(previewText)]")
+                    .font(.system(size: 11, design: .monospaced))
+                    .foregroundColor(RetroTheme.accentGreen)
+                Spacer()
             }
+            .padding(.horizontal, 4)
+            .opacity(showsPreview ? 1.0 : 0.0)
         }
         .retroDisplay()
+        .frame(height: panelHeight)
     }
 }
 

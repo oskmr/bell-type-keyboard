@@ -19,7 +19,8 @@ struct RetroTheme {
     static let accentGreen = Color(red: 0.3, green: 0.9, blue: 0.3)
     static let borderColor = Color(red: 0.25, green: 0.25, blue: 0.25)
 
-    static let bodyBackground = Color(red: 0.12, green: 0.12, blue: 0.12)
+    static let bodyBackground = displayBackground
+    static let keyboardSystemBackground = Color(UIColor.systemGray5)
 }
 
 struct RetroDisplayModifier: ViewModifier {

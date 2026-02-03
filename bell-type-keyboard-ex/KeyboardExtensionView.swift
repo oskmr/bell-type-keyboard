@@ -29,11 +29,14 @@ struct KeyboardExtensionView: View {
     /// KeyboardExtensionView(inputManager: PokebellInputManager(isKeyboardExtension: true)).body
     /// ```
     var body: some View {
-        VStack(spacing: 4) {
+        VStack(spacing: 0) {
             PredictionBarView(candidates: inputManager.candidates) { candidate in
                 inputManager.selectCandidate(candidate)
             }
-            .padding(.vertical, 2)
+            .background(Color.clear)
+            .frame(height: 34)
+            .layoutPriority(1)
+            .fixedSize(horizontal: false, vertical: true)
 
             VStack(spacing: 4) {
                 ForEach(buttons, id: \.self) { row in
@@ -79,9 +82,9 @@ struct KeyboardExtensionView: View {
                 }
 
             }
-            .padding(.horizontal, 6)
-            .padding(.vertical, 4)
             .background(RetroTheme.bodyBackground)
         }
+        .background(Color.clear)
+        .ignoresSafeArea()
     }
 }

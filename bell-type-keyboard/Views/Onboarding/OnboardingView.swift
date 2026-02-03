@@ -104,8 +104,6 @@ struct OnboardingView: View {
             )
             .background(RetroTheme.bodyBackground.ignoresSafeArea())
     }
-    
-    
 }
 
 #Preview {

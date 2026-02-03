@@ -14,7 +14,7 @@ import SwiftUI
 /// DemoView()
 /// ```
 struct DemoView: View {
-    @StateObject private var inputManager = PokebellInputManager()
+    @StateObject private var inputManager = PokebellInputManager(converter: KanaKanjiConverterService())
 
     /// Renders the demo layout and binds it to the input manager.
     ///
@@ -25,24 +25,36 @@ struct DemoView: View {
     var body: some View {
         // Compose display strings for the output section.
         let previewText = inputManager.currentPreview
-        let displayText = inputManager.inputText + previewText + (previewText.isEmpty ? "" : "_")
+        let composingText = inputManager.composingText
+        let displayText = inputManager.inputText + composingText + (previewText.isEmpty ? "" : previewText)
+        let keyboardHeight: CGFloat = 320
+
         VStack(spacing: 0) {
             VStack(spacing: 16) {
-                DemoHeaderView()
-                    .padding(.top, 20)
-
                 DemoOutputView(
                     displayText: displayText,
-                    previewText: previewText
+                    previewText: previewText,
                 )
+                .padding(.top, 40)
+                .padding(.horizontal)
+
+                PredictionBarView(candidates: inputManager.candidates) { candidate in
+                    inputManager.selectCandidate(candidate)
+                }
                 .padding(.horizontal)
             }
             .padding(.bottom, 20)
             .background(RetroTheme.bodyBackground)
 
-            Spacer()
+            Spacer(minLength: 0)
 
             PokebellKeyboardView(inputManager: inputManager)
+                .frame(height: keyboardHeight)
+                .padding(.bottom, 40)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .transaction { transaction in
+            transaction.animation = nil
         }
         .background(RetroTheme.bodyBackground)
     }

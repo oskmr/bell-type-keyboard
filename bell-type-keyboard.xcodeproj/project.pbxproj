@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5DFB46194ED4FE69FD42D768 /* KanaKanjiConverterModuleWithDefaultDictionary in Frameworks */ = {isa = PBXBuildFile; productRef = AFA898EFBF01A9B32E5BFA6D /* KanaKanjiConverterModuleWithDefaultDictionary */; };
 		CB4940A82F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CB4940A12F2AF5AF00AD5DB7 /* bell-type-keyboard-ex.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E7B877B5EC666051818AEADF /* KanaKanjiConverterModuleWithDefaultDictionary in Frameworks */ = {isa = PBXBuildFile; productRef = AFA898EFBF01A9B32E5BFA6D /* KanaKanjiConverterModuleWithDefaultDictionary */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7B877B5EC666051818AEADF /* KanaKanjiConverterModuleWithDefaultDictionary in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +137,7 @@
 			);
 			name = "bell-type-keyboard";
 			packageProductDependencies = (
+				AFA898EFBF01A9B32E5BFA6D /* KanaKanjiConverterModuleWithDefaultDictionary */,
 			);
 			productName = "bell-type-keyboard";
 			productReference = CB49405E2F2A8B5500AD5DB7 /* bell-type-keyboard.app */;

@@ -1,6 +1,6 @@
 //
 //  PredictionBarView.swift
-//  bell-type-keyboard-ex
+//  bell-type-keyboard
 //
 //  Created by miseri.osaka on 2026/01/29.
 //
@@ -48,11 +48,8 @@ struct PredictionBarView: View {
                     }
                 }
                 .padding(.horizontal, 6)
-                .background(Color.clear)
             }
             .frame(height: 34)
-            .background(Color.clear)
-            .scrollContentBackground(.hidden)
         }
     }
 }

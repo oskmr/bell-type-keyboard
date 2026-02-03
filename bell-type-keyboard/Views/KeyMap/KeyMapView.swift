@@ -26,15 +26,11 @@ struct KeyMapView: View {
         ScrollView {
             VStack(spacing: 32) {
                 VStack(spacing: 16) {
-                    Text("CHARACTER MAP")
+                    Text("変換表")
                         .font(.system(size: 28, weight: .bold, design: .monospaced))
                         .foregroundColor(RetroTheme.accentGreen)
                         .shadow(color: RetroTheme.accentGreen.opacity(0.5), radius: 5)
                         .padding(.top, 40)
-
-                    Text(">> PRESS COUNT >>")
-                        .font(.system(size: 14, design: .monospaced))
-                        .foregroundColor(RetroTheme.displayText)
                 }
 
                 VStack(spacing: 12) {
@@ -48,13 +44,6 @@ struct KeyMapView: View {
                 .padding(.horizontal)
 
                 VStack(alignment: .leading, spacing: 16) {
-                    HStack {
-                        Text(">> USAGE TIPS")
-                            .font(.system(size: 20, weight: .bold, design: .monospaced))
-                            .foregroundColor(RetroTheme.accentGreen)
-                        Spacer()
-                    }
-
                     VStack(alignment: .leading, spacing: 12) {
                         TipRowView(
                             icon: "1.circle.fill",
@@ -68,7 +57,7 @@ struct KeyMapView: View {
 
                         TipRowView(
                             icon: "hand.tap.fill",
-                            text: "[OK]ボタンで手動確定\n[DEL]ボタンで削除"
+                            text: "[CLR]ボタンで手動確定\n[DEL]ボタンで削除"
                         )
                     }
                     .padding()
@@ -80,11 +69,6 @@ struct KeyMapView: View {
                     .cornerRadius(8)
                 }
                 .padding(.horizontal)
-
-                Text("(C) 2026 POKE-BELL-KB")
-                    .font(.system(size: 12, design: .monospaced))
-                    .foregroundColor(RetroTheme.displayTextDim)
-                    .padding(.bottom, 40)
             }
         }
         .background(RetroTheme.bodyBackground)

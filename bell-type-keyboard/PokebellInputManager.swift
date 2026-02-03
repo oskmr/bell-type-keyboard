@@ -56,12 +56,42 @@ final class PokebellInputManager: ObservableObject {
             firstDigit = key
             currentPreview = "\(key)_"
         } else if let first = firstDigit {
-            if let character = mapper.getCharacter(firstDigit: first, secondDigit: key) {
+            if mapper.isDakuten(firstDigit: first, secondDigit: key) {
+                applyVoicedMark(isDakuten: true)
+            } else if mapper.isHandakuten(firstDigit: first, secondDigit: key) {
+                applyVoicedMark(isDakuten: false)
+            } else if let character = mapper.getCharacter(firstDigit: first, secondDigit: key) {
                 confirmCharacter(character)
             } else {
                 firstDigit = key
                 currentPreview = "\(key)_"
             }
+        }
+    }
+
+    private func applyVoicedMark(isDakuten: Bool) {
+        firstDigit = nil
+        currentPreview = ""
+
+        guard !isKeyboardExtension else { return }
+
+        if !composingText.isEmpty {
+            guard let lastChar = composingText.last else { return }
+            let converted = isDakuten
+                ? mapper.applyDakuten(to: lastChar)
+                : mapper.applyHandakuten(to: lastChar)
+            guard let converted else { return }
+            composingText.removeLast()
+            composingText.append(converted)
+            updateConversion()
+        } else if !inputText.isEmpty {
+            guard let lastChar = inputText.last else { return }
+            let converted = isDakuten
+                ? mapper.applyDakuten(to: lastChar)
+                : mapper.applyHandakuten(to: lastChar)
+            guard let converted else { return }
+            inputText.removeLast()
+            inputText.append(converted)
         }
     }
 

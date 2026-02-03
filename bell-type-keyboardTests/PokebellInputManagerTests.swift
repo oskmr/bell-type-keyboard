@@ -83,4 +83,30 @@ final class PokebellInputManagerTests: XCTestCase {
         XCTAssertEqual(manager.composingText, "")
         XCTAssertEqual(manager.candidates, [])
     }
+
+    func testDakutenAppliedToComposingText() {
+        let converter = FakeConverter(candidate: "が")
+        let manager = PokebellInputManager(isKeyboardExtension: false, converter: converter)
+
+        // Input か (21) then dakuten (04)
+        manager.pressKey(2)
+        manager.pressKey(1)
+        manager.pressKey(0)
+        manager.pressKey(4)
+
+        XCTAssertEqual(manager.composingText, "が")
+    }
+
+    func testHandakutenAppliedToComposingText() {
+        let converter = FakeConverter(candidate: "ぱ")
+        let manager = PokebellInputManager(isKeyboardExtension: false, converter: converter)
+
+        // Input は (61) then handakuten (05)
+        manager.pressKey(6)
+        manager.pressKey(1)
+        manager.pressKey(0)
+        manager.pressKey(5)
+
+        XCTAssertEqual(manager.composingText, "ぱ")
+    }
 }

@@ -20,12 +20,40 @@ final class PokebellInputMapper {
         "71": "ま", "72": "み", "73": "む", "74": "め", "75": "も",
         "81": "や", "82": "ゆ", "83": "よ", "84": "わ", "85": "を",
         "91": "ら", "92": "り", "93": "る", "94": "れ", "95": "ろ", "96": "ん",
-        "00": " ", "01": "わ", "02": "を", "03": "ん"
+        "00": " ", "01": "わ", "02": "を", "03": "ん", "04": "゛", "05": "゜"
+    ]
+
+    private let dakutenMap: [Character: Character] = [
+        "か": "が", "き": "ぎ", "く": "ぐ", "け": "げ", "こ": "ご",
+        "さ": "ざ", "し": "じ", "す": "ず", "せ": "ぜ", "そ": "ぞ",
+        "た": "だ", "ち": "ぢ", "つ": "づ", "て": "で", "と": "ど",
+        "は": "ば", "ひ": "び", "ふ": "ぶ", "へ": "べ", "ほ": "ぼ",
+        "う": "ゔ",
+    ]
+
+    private let handakutenMap: [Character: Character] = [
+        "は": "ぱ", "ひ": "ぴ", "ふ": "ぷ", "へ": "ぺ", "ほ": "ぽ",
     ]
 
     func getCharacter(firstDigit: Int, secondDigit: Int) -> String? {
         let key = "\(firstDigit)\(secondDigit)"
         return mapping[key]
+    }
+
+    func applyDakuten(to character: Character) -> Character? {
+        return dakutenMap[character]
+    }
+
+    func applyHandakuten(to character: Character) -> Character? {
+        return handakutenMap[character]
+    }
+
+    func isDakuten(firstDigit: Int, secondDigit: Int) -> Bool {
+        return firstDigit == 0 && secondDigit == 4
+    }
+
+    func isHandakuten(firstDigit: Int, secondDigit: Int) -> Bool {
+        return firstDigit == 0 && secondDigit == 5
     }
 
     func getCharactersForRow(row: Int) -> [(code: String, char: String)] {

@@ -71,7 +71,8 @@ final class PokebellInputMapperTests: XCTestCase {
 
         XCTAssertEqual(mapper.getCharacter(firstDigit: 6, secondDigit: 7), "？")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 6, secondDigit: 8), "！")
-        XCTAssertEqual(mapper.getCharacter(firstDigit: 6, secondDigit: 9), "／")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 6, secondDigit: 9), "－")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 6, secondDigit: 0), "／")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 7, secondDigit: 6), "￥")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 7, secondDigit: 7), "＆")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 2), "（")

@@ -130,4 +130,54 @@ final class PokebellInputManagerTests: XCTestCase {
         XCTAssertEqual(manager.composingText, "")
         XCTAssertEqual(manager.candidates, [])
     }
+
+    func testDakutenAppliedToLastCharacter() {
+        let converter = FakeConverter(candidate: "が")
+        let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
+
+        // Input か (21) then dakuten (04)
+        manager.pressKey(2)
+        manager.pressKey(1)
+        manager.pressKey(0)
+        manager.pressKey(4)
+
+        XCTAssertEqual(manager.composingText, "が")
+    }
+
+    func testHandakutenAppliedToLastCharacter() {
+        let converter = FakeConverter(candidate: "ぱ")
+        let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
+
+        // Input は (61) then handakuten (05)
+        manager.pressKey(6)
+        manager.pressKey(1)
+        manager.pressKey(0)
+        manager.pressKey(5)
+
+        XCTAssertEqual(manager.composingText, "ぱ")
+    }
+
+    func testDakutenIgnoredWhenNoComposingText() {
+        let converter = FakeConverter(candidate: "")
+        let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
+
+        // Press dakuten (04) with no prior input
+        manager.pressKey(0)
+        manager.pressKey(4)
+
+        XCTAssertEqual(manager.composingText, "")
+    }
+
+    func testDakutenIgnoredForIncompatibleCharacter() {
+        let converter = FakeConverter(candidate: "あ")
+        let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
+
+        // Input あ (11) then dakuten (04) - あ has no dakuten form
+        manager.pressKey(1)
+        manager.pressKey(1)
+        manager.pressKey(0)
+        manager.pressKey(4)
+
+        XCTAssertEqual(manager.composingText, "あ")
+    }
 }

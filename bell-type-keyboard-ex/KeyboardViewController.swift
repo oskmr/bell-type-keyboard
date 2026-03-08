@@ -68,7 +68,13 @@ class KeyboardViewController: UIInputViewController {
             self?.textDocumentProxy.deleteBackward()
         }
 
-        let keyboardView = KeyboardExtensionView(inputManager: inputManager)
+        var keyboardView = KeyboardExtensionView(inputManager: inputManager)
+        keyboardView.onInsertText = { [weak self] text in
+            self?.textDocumentProxy.insertText(text)
+        }
+        keyboardView.onDeleteBackward = { [weak self] in
+            self?.textDocumentProxy.deleteBackward()
+        }
         let hosting = UIHostingController(rootView: keyboardView)
         // Match the host view background to remove any top padding tint mismatch.
         hosting.view.backgroundColor = UIColor(RetroTheme.keyboardSystemBackground)

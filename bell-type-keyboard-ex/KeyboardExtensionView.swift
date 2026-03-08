@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+enum KeyboardMode {
+    case pokebell
+    case numeric
+}
+
 /// KeyboardExtensionView renders the numeric keypad and prediction bar.
 ///
 /// Example:
@@ -15,6 +20,10 @@ import SwiftUI
 /// ```
 struct KeyboardExtensionView: View {
     @ObservedObject var inputManager: PokebellInputManager
+    @State private var keyboardMode: KeyboardMode = .pokebell
+
+    var onInsertText: ((String) -> Void)?
+    var onDeleteBackward: (() -> Void)?
 
     let buttons: [[Int]] = [
         [1, 2, 3],
@@ -30,61 +39,82 @@ struct KeyboardExtensionView: View {
     /// ```
     var body: some View {
         VStack(spacing: 0) {
-            PredictionBarView(candidates: inputManager.candidates) { candidate in
-                inputManager.selectCandidate(candidate)
-            }
-            .background(Color.clear)
-            .frame(height: 34)
-            .layoutPriority(1)
-            .fixedSize(horizontal: false, vertical: true)
-
-            VStack(spacing: 4) {
-                ForEach(buttons, id: \.self) { row in
-                    HStack(spacing: 4) {
-                        ForEach(row, id: \.self) { number in
-                            Button(action: {
-                                inputManager.pressKey(number)
-                            }) {
-                                Text("\(number)")
-                                    .font(.system(size: 24, weight: .bold, design: .monospaced))
-                            }
-                            .buttonStyle(CompactRetroButtonStyle())
-                        }
-                    }
+            if keyboardMode == .pokebell {
+                PredictionBarView(candidates: inputManager.candidates) { candidate in
+                    inputManager.selectCandidate(candidate)
                 }
+                .background(Color.clear)
+                .frame(height: 34)
+                .layoutPriority(1)
+                .fixedSize(horizontal: false, vertical: true)
 
-                HStack(spacing: 4) {
-                    Button(action: {
-                        inputManager.deleteLastCharacter()
-                    }) {
-                        HStack(spacing: 2) {
-                            Image(systemName: "delete.left")
-                                .font(.system(size: 14))
-                        }
+                pokebellKeyboard
+            } else {
+                Spacer()
+                    .frame(height: 34)
+
+                NumericKeyboardView(
+                    onKeyPress: { number in
+                        onInsertText?(number)
+                    },
+                    onDelete: {
+                        onDeleteBackward?()
+                    },
+                    onModeSwitch: {
+                        keyboardMode = .pokebell
                     }
-                    .buttonStyle(CompactRetroButtonStyle())
-
-                    Button(action: {
-                        inputManager.pressKey(0)
-                    }) {
-                        Text("0")
-                            .font(.system(size: 24, weight: .bold, design: .monospaced))
-                    }
-                    .buttonStyle(CompactRetroButtonStyle())
-
-                    Button(action: {
-                        inputManager.confirmInput()
-                    }) {
-                        Text("CLR")
-                            .font(.system(size: 14, weight: .bold, design: .monospaced))
-                    }
-                    .buttonStyle(CompactRetroButtonStyle(isSpecial: true))
-                }
-
+                )
             }
-            .background(RetroTheme.bodyBackground)
         }
         .background(Color.clear)
         .ignoresSafeArea()
+    }
+
+    private var pokebellKeyboard: some View {
+        VStack(spacing: 4) {
+            ForEach(buttons, id: \.self) { row in
+                HStack(spacing: 4) {
+                    ForEach(row, id: \.self) { number in
+                        Button(action: {
+                            inputManager.pressKey(number)
+                        }) {
+                            Text("\(number)")
+                                .font(.system(size: 24, weight: .bold, design: .monospaced))
+                        }
+                        .buttonStyle(CompactRetroButtonStyle())
+                    }
+                }
+            }
+
+            HStack(spacing: 4) {
+                Button(action: {
+                    inputManager.deleteLastCharacter()
+                }) {
+                    HStack(spacing: 2) {
+                        Image(systemName: "delete.left")
+                            .font(.system(size: 14))
+                    }
+                }
+                .buttonStyle(CompactRetroButtonStyle())
+
+                Button(action: {
+                    inputManager.pressKey(0)
+                }) {
+                    Text("0")
+                        .font(.system(size: 24, weight: .bold, design: .monospaced))
+                }
+                .buttonStyle(CompactRetroButtonStyle())
+
+                Button(action: {
+                    keyboardMode = .numeric
+                }) {
+                    Text("12")
+                        .font(.system(size: 14, weight: .bold, design: .monospaced))
+                }
+                .buttonStyle(CompactRetroButtonStyle(isSpecial: true))
+            }
+
+        }
+        .background(RetroTheme.bodyBackground)
     }
 }

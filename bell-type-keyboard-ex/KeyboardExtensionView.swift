@@ -73,6 +73,14 @@ struct KeyboardExtensionView: View {
                     .buttonStyle(CompactRetroButtonStyle())
 
                     Button(action: {
+                        inputManager.applySmallKana()
+                    }) {
+                        Text("小")
+                            .font(.system(size: 18, weight: .bold))
+                    }
+                    .buttonStyle(CompactRetroButtonStyle())
+
+                    Button(action: {
                         inputManager.confirmInput()
                     }) {
                         Text("CLR")

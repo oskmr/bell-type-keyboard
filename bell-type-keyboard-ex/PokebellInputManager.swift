@@ -74,6 +74,11 @@ class PokebellInputManager: ObservableObject {
         }
     }
 
+    /// Applies the small kana modifier to the last character.
+    func applySmallKana() {
+        applyModifier { mapper.applySmallKana(to: $0) }
+    }
+
     /// Applies a character transform (dakuten, handakuten, or small kana) to
     /// the last composed character, if the transform produces a result.
     private func applyModifier(_ convert: (Character) -> Character?) {

@@ -82,4 +82,12 @@ final class PokebellInputMapperTests: XCTestCase {
         XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 7), "＃")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 8), " ")
     }
+
+    func testPunctuationMappings() {
+        let mapper = PokebellInputMapper.shared
+
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 7), "、")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 8), "。")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 9), "・")
+    }
 }

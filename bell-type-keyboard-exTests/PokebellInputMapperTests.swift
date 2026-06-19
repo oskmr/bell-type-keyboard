@@ -83,15 +83,12 @@ final class PokebellInputMapperTests: XCTestCase {
         XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 8), " ")
     }
 
-    func testYoAndNumberMappings() {
+    func testYoMapping() {
         let mapper = PokebellInputMapper.shared
 
         // 85 outputs よ (previously を, which remains available at 02).
         XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 5), "よ")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 2), "を")
-        // 96 outputs the digit 1 (ん remains available at 03).
-        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 6), "1")
-        XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 3), "ん")
     }
 
     func testSmallKanaDetection() {

@@ -180,4 +180,43 @@ final class PokebellInputManagerTests: XCTestCase {
 
         XCTAssertEqual(manager.composingText, "あ")
     }
+
+    func testSmallKanaAppliedToLastCharacter() {
+        let converter = FakeConverter(candidate: "ょ")
+        let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
+
+        // Input よ (85) then small-kana modifier (06)
+        manager.pressKey(8)
+        manager.pressKey(5)
+        manager.pressKey(0)
+        manager.pressKey(6)
+
+        XCTAssertEqual(manager.composingText, "ょ")
+    }
+
+    func testSmallKanaForTsu() {
+        let converter = FakeConverter(candidate: "っ")
+        let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
+
+        // Input つ (43) then small-kana modifier (06)
+        manager.pressKey(4)
+        manager.pressKey(3)
+        manager.pressKey(0)
+        manager.pressKey(6)
+
+        XCTAssertEqual(manager.composingText, "っ")
+    }
+
+    func testSmallKanaIgnoredForIncompatibleCharacter() {
+        let converter = FakeConverter(candidate: "か")
+        let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
+
+        // Input か (21) then small-kana modifier (06) - か has no small form
+        manager.pressKey(2)
+        manager.pressKey(1)
+        manager.pressKey(0)
+        manager.pressKey(6)
+
+        XCTAssertEqual(manager.composingText, "か")
+    }
 }

@@ -18,9 +18,9 @@ class PokebellInputMapper {
         "51": "な", "52": "に", "53": "ぬ", "54": "ね", "55": "の",
         "61": "は", "62": "ひ", "63": "ふ", "64": "へ", "65": "ほ", "67": "？", "68": "！", "69": "－", "60": "／",
         "71": "ま", "72": "み", "73": "む", "74": "め", "75": "も", "76": "￥", "77": "＆",
-        "81": "や", "82": "（", "83": "ゆ", "84": "）", "85": "を", "86": "＊", "87": "＃", "88": " ",
-        "91": "ら", "92": "り", "93": "る", "94": "れ", "95": "ろ", "96": "ん",
-        "00": " ", "01": "わ", "02": "を", "03": "ん", "04": "゛", "05": "゜"
+        "81": "や", "82": "（", "83": "ゆ", "84": "）", "85": "よ", "86": "＊", "87": "＃", "88": " ",
+        "91": "ら", "92": "り", "93": "る", "94": "れ", "95": "ろ", "96": "1",
+        "00": " ", "01": "わ", "02": "を", "03": "ん", "04": "゛", "05": "゜", "06": "小"
     ]
 
     private let dakutenMap: [Character: Character] = [
@@ -33,6 +33,12 @@ class PokebellInputMapper {
 
     private let handakutenMap: [Character: Character] = [
         "は": "ぱ", "ひ": "ぴ", "ふ": "ぷ", "へ": "ぺ", "ほ": "ぽ",
+    ]
+
+    private let smallKanaMap: [Character: Character] = [
+        "あ": "ぁ", "い": "ぃ", "う": "ぅ", "え": "ぇ", "お": "ぉ",
+        "や": "ゃ", "ゆ": "ゅ", "よ": "ょ",
+        "つ": "っ", "わ": "ゎ",
     ]
 
     func getCharacter(firstDigit: Int, secondDigit: Int) -> String? {
@@ -48,12 +54,20 @@ class PokebellInputMapper {
         return handakutenMap[character]
     }
 
+    func applySmallKana(to character: Character) -> Character? {
+        return smallKanaMap[character]
+    }
+
     func isDakuten(firstDigit: Int, secondDigit: Int) -> Bool {
         return firstDigit == 0 && secondDigit == 4
     }
 
     func isHandakuten(firstDigit: Int, secondDigit: Int) -> Bool {
         return firstDigit == 0 && secondDigit == 5
+    }
+
+    func isSmallKana(firstDigit: Int, secondDigit: Int) -> Bool {
+        return firstDigit == 0 && secondDigit == 6
     }
 
     func getCharactersForRow(row: Int) -> [(code: String, char: String)] {

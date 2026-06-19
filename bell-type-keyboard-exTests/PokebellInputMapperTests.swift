@@ -82,4 +82,40 @@ final class PokebellInputMapperTests: XCTestCase {
         XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 7), "＃")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 8), " ")
     }
+
+    func testYoAndNumberMappings() {
+        let mapper = PokebellInputMapper.shared
+
+        // 85 outputs よ (previously を, which remains available at 02).
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 8, secondDigit: 5), "よ")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 2), "を")
+        // 96 outputs the digit 1 (ん remains available at 03).
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 6), "1")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 3), "ん")
+    }
+
+    func testSmallKanaDetection() {
+        let mapper = PokebellInputMapper.shared
+
+        XCTAssertTrue(mapper.isSmallKana(firstDigit: 0, secondDigit: 6))
+        XCTAssertFalse(mapper.isSmallKana(firstDigit: 0, secondDigit: 4))
+        XCTAssertFalse(mapper.isSmallKana(firstDigit: 1, secondDigit: 6))
+    }
+
+    func testApplySmallKana() {
+        let mapper = PokebellInputMapper.shared
+
+        XCTAssertEqual(mapper.applySmallKana(to: "あ"), "ぁ" as Character)
+        XCTAssertEqual(mapper.applySmallKana(to: "い"), "ぃ" as Character)
+        XCTAssertEqual(mapper.applySmallKana(to: "う"), "ぅ" as Character)
+        XCTAssertEqual(mapper.applySmallKana(to: "え"), "ぇ" as Character)
+        XCTAssertEqual(mapper.applySmallKana(to: "お"), "ぉ" as Character)
+        XCTAssertEqual(mapper.applySmallKana(to: "や"), "ゃ" as Character)
+        XCTAssertEqual(mapper.applySmallKana(to: "ゆ"), "ゅ" as Character)
+        XCTAssertEqual(mapper.applySmallKana(to: "よ"), "ょ" as Character)
+        XCTAssertEqual(mapper.applySmallKana(to: "つ"), "っ" as Character)
+        XCTAssertEqual(mapper.applySmallKana(to: "わ"), "ゎ" as Character)
+        XCTAssertNil(mapper.applySmallKana(to: "か"))
+        XCTAssertNil(mapper.applySmallKana(to: "ん"))
+    }
 }

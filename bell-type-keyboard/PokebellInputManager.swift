@@ -57,9 +57,11 @@ final class PokebellInputManager: ObservableObject {
             currentPreview = "\(key)_"
         } else if let first = firstDigit {
             if mapper.isDakuten(firstDigit: first, secondDigit: key) {
-                applyVoicedMark(isDakuten: true)
+                applyModifier { self.mapper.applyDakuten(to: $0) }
             } else if mapper.isHandakuten(firstDigit: first, secondDigit: key) {
-                applyVoicedMark(isDakuten: false)
+                applyModifier { self.mapper.applyHandakuten(to: $0) }
+            } else if mapper.isSmallKana(firstDigit: first, secondDigit: key) {
+                applyModifier { self.mapper.applySmallKana(to: $0) }
             } else if let character = mapper.getCharacter(firstDigit: first, secondDigit: key) {
                 confirmCharacter(character)
             } else {
@@ -69,27 +71,21 @@ final class PokebellInputManager: ObservableObject {
         }
     }
 
-    private func applyVoicedMark(isDakuten: Bool) {
+    /// Applies a character transform (dakuten, handakuten, or small kana) to
+    /// the last composed character, if the transform produces a result.
+    private func applyModifier(_ convert: (Character) -> Character?) {
         firstDigit = nil
         currentPreview = ""
 
         guard !isKeyboardExtension else { return }
 
         if !composingText.isEmpty {
-            guard let lastChar = composingText.last else { return }
-            let converted = isDakuten
-                ? mapper.applyDakuten(to: lastChar)
-                : mapper.applyHandakuten(to: lastChar)
-            guard let converted else { return }
+            guard let lastChar = composingText.last, let converted = convert(lastChar) else { return }
             composingText.removeLast()
             composingText.append(converted)
             updateConversion()
         } else if !inputText.isEmpty {
-            guard let lastChar = inputText.last else { return }
-            let converted = isDakuten
-                ? mapper.applyDakuten(to: lastChar)
-                : mapper.applyHandakuten(to: lastChar)
-            guard let converted else { return }
+            guard let lastChar = inputText.last, let converted = convert(lastChar) else { return }
             inputText.removeLast()
             inputText.append(converted)
         }

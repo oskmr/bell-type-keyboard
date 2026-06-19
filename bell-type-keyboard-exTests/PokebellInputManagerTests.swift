@@ -185,11 +185,11 @@ final class PokebellInputManagerTests: XCTestCase {
         let converter = FakeConverter(candidate: "ょ")
         let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
 
-        // Input よ (85) then small-kana modifier (06)
+        // Input よ (85) then small-kana modifier (80)
         manager.pressKey(8)
         manager.pressKey(5)
+        manager.pressKey(8)
         manager.pressKey(0)
-        manager.pressKey(6)
 
         XCTAssertEqual(manager.composingText, "ょ")
     }
@@ -198,11 +198,11 @@ final class PokebellInputManagerTests: XCTestCase {
         let converter = FakeConverter(candidate: "っ")
         let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
 
-        // Input つ (43) then small-kana modifier (06)
+        // Input つ (43) then small-kana modifier (80)
         manager.pressKey(4)
         manager.pressKey(3)
+        manager.pressKey(8)
         manager.pressKey(0)
-        manager.pressKey(6)
 
         XCTAssertEqual(manager.composingText, "っ")
     }
@@ -211,11 +211,11 @@ final class PokebellInputManagerTests: XCTestCase {
         let converter = FakeConverter(candidate: "か")
         let manager = PokebellInputManager(isKeyboardExtension: true, converter: converter)
 
-        // Input か (21) then small-kana modifier (06) - か has no small form
+        // Input か (21) then small-kana modifier (80) - か has no small form
         manager.pressKey(2)
         manager.pressKey(1)
+        manager.pressKey(8)
         manager.pressKey(0)
-        manager.pressKey(6)
 
         XCTAssertEqual(manager.composingText, "か")
     }

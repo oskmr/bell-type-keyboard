@@ -20,7 +20,6 @@ final class PokebellInputMapperTests: XCTestCase {
     func testZeroRowMappings() {
         let mapper = PokebellInputMapper.shared
 
-        XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 0), " ")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 1), "わ")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 2), "を")
         XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 3), "ん")
@@ -94,9 +93,37 @@ final class PokebellInputMapperTests: XCTestCase {
     func testSmallKanaDetection() {
         let mapper = PokebellInputMapper.shared
 
-        XCTAssertTrue(mapper.isSmallKana(firstDigit: 0, secondDigit: 6))
+        XCTAssertTrue(mapper.isSmallKana(firstDigit: 8, secondDigit: 0))
         XCTAssertFalse(mapper.isSmallKana(firstDigit: 0, secondDigit: 4))
-        XCTAssertFalse(mapper.isSmallKana(firstDigit: 1, secondDigit: 6))
+        XCTAssertFalse(mapper.isSmallKana(firstDigit: 8, secondDigit: 1))
+    }
+
+    func testAlphabetMappings() {
+        let mapper = PokebellInputMapper.shared
+
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 1, secondDigit: 6), "A")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 1, secondDigit: 0), "E")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 2, secondDigit: 6), "F")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 2, secondDigit: 0), "J")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 3, secondDigit: 6), "K")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 4, secondDigit: 6), "P")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 5, secondDigit: 0), "Y")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 6, secondDigit: 6), "Z")
+    }
+
+    func testDigitMappings() {
+        let mapper = PokebellInputMapper.shared
+
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 6), "1")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 7), "2")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 8), "3")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 9), "4")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 9, secondDigit: 0), "5")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 6), "6")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 7), "7")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 8), "8")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 9), "9")
+        XCTAssertEqual(mapper.getCharacter(firstDigit: 0, secondDigit: 0), "0")
     }
 
     func testApplySmallKana() {

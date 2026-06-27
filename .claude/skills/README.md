@@ -16,6 +16,7 @@
 | `swift-coding-standards` | Swift/SwiftUI コーディング規約 |
 | `swiftui-pro` | SwiftUI ベストプラクティス |
 | `git-pull-latest` | 「最新にして」→ git pull |
+| `commit-pr` | 差分を整理してコミットし、PR を自動作成 |
 | `harada-growth-principles` | グロース戦略の評価 |
 
 ## 初回セットアップ（新メンバー）
@@ -58,7 +59,7 @@ chmod +x .claude/skills/ios-appstore-submit/scripts/*.sh
 
 ## スキルの追加・更新
 
-1. `.cursor/skills/<skill-name>/SKILL.md` を作成または編集
+1. `.claude/skills/<skill-name>/SKILL.md` を作成または編集
 2. スクリプト付きスキルは `scripts/` 配下に配置し、パスはスクリプト相対（`$(dirname "$0")`）で解決
 3. 個人設定は `settings.local.conf` 等に分離し `.gitignore` 対象にする
 

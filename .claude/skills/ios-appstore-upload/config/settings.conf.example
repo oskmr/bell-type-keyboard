@@ -1,0 +1,11 @@
+# App Store Connect API Key 設定
+# cp settings.conf.example settings.conf して値を設定
+
+API_KEY_ID=""
+API_ISSUER_ID=""
+API_KEY_PATH="$HOME/.appstoreconnect/private_keys/AuthKey_XXXXXX.p8"
+
+# Calme デフォルト
+DEFAULT_SCHEME="Cal AI"
+ARCHIVE_DIR="/tmp/xcode-archives"
+BUILD_LOG_LINES=30

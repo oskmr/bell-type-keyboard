@@ -1,0 +1,15 @@
+# iOS Device Build - 設定ファイル（サンプル）
+# このファイルをコピーして settings.conf として使用してください
+
+# デフォルトのデバイス名（部分一致で検索）
+# 空欄の場合は毎回自動検出
+DEFAULT_DEVICE_NAME=""
+
+# デフォルトのスキーム名（空欄で自動検出）
+DEFAULT_SCHEME=""
+
+# 完了通知の言語（"ja" or "en"）
+NOTIFY_LANGUAGE="ja"
+
+# ビルドログの表示行数
+BUILD_LOG_LINES=30

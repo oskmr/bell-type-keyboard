@@ -1,0 +1,5 @@
+# 個人のデバイス設定（このファイルを settings.local.conf にコピーして使用）
+# cp settings.local.conf.example settings.local.conf
+
+# デフォルトのデバイス名（部分一致で検索）
+DEFAULT_DEVICE_NAME=""

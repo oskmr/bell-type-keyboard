@@ -18,7 +18,7 @@ import KanaKanjiConverterModuleWithDefaultDictionary
 ///     candidates: ["愛", "藍"]
 /// )
 /// ```
-struct KanaKanjiConversionResult {
+struct KanaKanjiConversionResult: Sendable {
     let composingText: String
     let candidateText: String
     let candidates: [String]
@@ -29,50 +29,46 @@ struct KanaKanjiConversionResult {
 /// Example:
 /// ```swift
 /// let converter: KanaKanjiConverting = KanaKanjiConverterService()
-/// let result = converter.convert(composingText: "あい")
+/// let result = await converter.convert(composingText: "あい")
 /// print(result.candidateText)
 /// ```
-protocol KanaKanjiConverting {
+protocol KanaKanjiConverting: Sendable {
     /// Converts the composing text into candidates.
     ///
     /// Example:
     /// ```swift
-    /// let result = converter.convert(composingText: "かんじ")
+    /// let result = await converter.convert(composingText: "かんじ")
     /// ```
     ///
     /// - Parameter composingText: The current kana composition.
     /// - Returns: The conversion result with candidates.
-    func convert(composingText: String) -> KanaKanjiConversionResult
+    func convert(composingText: String) async -> KanaKanjiConversionResult
 }
 
-/// KanaKanjiConverterService wraps AzooKeyKanaKanjiConverter for the app.
+/// KanaKanjiConverterService wraps AzooKeyKanaKanjiConverter behind an actor so
+/// conversions run off the main thread and the non-thread-safe converter stays isolated.
 ///
 /// Example:
 /// ```swift
 /// let service = KanaKanjiConverterService()
-/// let result = service.convert(composingText: "とうきょう")
+/// let result = await service.convert(composingText: "とうきょう")
 /// ```
-final class KanaKanjiConverterService: KanaKanjiConverting {
-    private let converter: KanaKanjiConverter
-    private let options: ConvertRequestOptions
+actor KanaKanjiConverterService: KanaKanjiConverting {
+    // Loaded lazily on the actor so the heavy dictionary load happens off the
+    // main thread, on first conversion rather than at keyboard startup.
+    private var loadedConverter: KanaKanjiConverter?
+    private var loadedOptions: ConvertRequestOptions?
 
-    /// Initializes the converter with the default dictionary and options.
-    ///
-    /// Example:
-    /// ```swift
-    /// let service = KanaKanjiConverterService()
-    /// ```
-    init() {
-        let documentURL = FileManager.default.urls(
-            for: .documentDirectory,
-            in: .userDomainMask
-        ).first
+    private func loadConverterIfNeeded() -> (KanaKanjiConverter, ConvertRequestOptions) {
+        if let loadedConverter, let loadedOptions {
+            return (loadedConverter, loadedOptions)
+        }
 
-        let safeDocumentURL = documentURL ?? URL(fileURLWithPath: NSTemporaryDirectory())
+        let documentURL = URL.documentsDirectory
         let metadata = ConvertRequestOptions.Metadata(versionString: "bell-type-keyboard 1.0")
 
-        converter = KanaKanjiConverter.withDefaultDictionary()
-        options = ConvertRequestOptions(
+        let converter = KanaKanjiConverter.withDefaultDictionary()
+        let options = ConvertRequestOptions(
             N_best: 10,
             requireJapanesePrediction: true,
             requireEnglishPrediction: false,
@@ -83,19 +79,23 @@ final class KanaKanjiConverterService: KanaKanjiConverting {
             learningType: .inputAndOutput,
             maxMemoryCount: 65536,
             shouldResetMemory: false,
-            memoryDirectoryURL: safeDocumentURL,
-            sharedContainerURL: safeDocumentURL,
+            memoryDirectoryURL: documentURL,
+            sharedContainerURL: documentURL,
             textReplacer: .withDefaultEmojiDictionary(),
             specialCandidateProviders: KanaKanjiConverter.defaultSpecialCandidateProviders,
             metadata: metadata
         )
+
+        loadedConverter = converter
+        loadedOptions = options
+        return (converter, options)
     }
 
     /// Converts the composing text and returns best candidates.
     ///
     /// Example:
     /// ```swift
-    /// let result = service.convert(composingText: "にほん")
+    /// let result = await service.convert(composingText: "にほん")
     /// print(result.candidates)
     /// ```
     ///
@@ -109,6 +109,8 @@ final class KanaKanjiConverterService: KanaKanjiConverting {
                 candidates: []
             )
         }
+
+        let (converter, options) = loadConverterIfNeeded()
 
         // Build a new composing buffer for each conversion to avoid stale state.
         var buffer = ComposingText()

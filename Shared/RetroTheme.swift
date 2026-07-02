@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct RetroTheme {
     static let displayBackground = Color(red: 0.1, green: 0.15, blue: 0.1)
@@ -19,7 +20,10 @@ struct RetroTheme {
     static let accentGreen = Color(red: 0.3, green: 0.9, blue: 0.3)
     static let borderColor = Color(red: 0.25, green: 0.25, blue: 0.25)
 
-    static let bodyBackground = displayBackground
+    static let bodyBackground = Color(red: 0.12, green: 0.12, blue: 0.12)
+
+    // Keyboard-extension surfaces.
+    static let keyboardBackground = displayBackground
     static let keyboardSystemBackground = Color(UIColor.systemGray5)
 }
 
@@ -28,7 +32,9 @@ struct RetroDisplayModifier: ViewModifier {
         content
             .font(.system(size: 18, weight: .medium, design: .monospaced))
             .foregroundColor(RetroTheme.displayText)
-            .padding()
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
+            .padding(.top, 0)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(RetroTheme.displayBackground)
             .overlay(
@@ -61,7 +67,7 @@ struct RetroButtonStyle: ButtonStyle {
             .font(.system(size: 20, weight: .bold, design: .monospaced))
             .foregroundColor(isSpecial ? RetroTheme.displayBackground : RetroTheme.displayText)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
+            .frame(height: 56)
             .background(
                 ZStack {
                     if isSpecial {

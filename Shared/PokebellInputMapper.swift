@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PokebellInputMapper {
+final class PokebellInputMapper {
     static let shared = PokebellInputMapper()
 
     private let mapping: [String: String] = [
@@ -47,27 +47,27 @@ class PokebellInputMapper {
     }
 
     func applyDakuten(to character: Character) -> Character? {
-        return dakutenMap[character]
+        dakutenMap[character]
     }
 
     func applyHandakuten(to character: Character) -> Character? {
-        return handakutenMap[character]
+        handakutenMap[character]
     }
 
     func applySmallKana(to character: Character) -> Character? {
-        return smallKanaMap[character]
+        smallKanaMap[character]
     }
 
     func isDakuten(firstDigit: Int, secondDigit: Int) -> Bool {
-        return firstDigit == 0 && secondDigit == 4
+        firstDigit == 0 && secondDigit == 4
     }
 
     func isHandakuten(firstDigit: Int, secondDigit: Int) -> Bool {
-        return firstDigit == 0 && secondDigit == 5
+        firstDigit == 0 && secondDigit == 5
     }
 
     func isSmallKana(firstDigit: Int, secondDigit: Int) -> Bool {
-        return firstDigit == 8 && secondDigit == 0
+        firstDigit == 8 && secondDigit == 0
     }
 
     func getCharactersForRow(row: Int) -> [(code: String, char: String)] {
@@ -82,6 +82,6 @@ class PokebellInputMapper {
     }
 
     func getAllRows() -> [Int] {
-        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
     }
 }

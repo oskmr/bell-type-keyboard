@@ -1,12 +1,12 @@
 //
 //  PokebellInputMapperTests.swift
-//  bell-type-keyboard-exTests
+//  bell-type-keyboardTests
 //
 //  Created by miseri.osaka on 2026/01/29.
 //
 
 import XCTest
-@testable import bell_type_keyboard_ex
+@testable import bell_type_keyboard
 
 /// PokebellInputMapperTests validates row-0 mappings.
 final class PokebellInputMapperTests: XCTestCase {

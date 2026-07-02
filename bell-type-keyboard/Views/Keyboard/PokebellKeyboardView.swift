@@ -75,8 +75,9 @@ struct PokebellKeyboardView: View {
         .buttonStyle(RetroButtonStyle())
     }
 
+    /// Commits the composing text as raw kana without conversion.
     private var clearKey: some View {
-        Button(action: { inputManager.clearComposing() }) {
+        Button(action: { inputManager.confirmRawInput() }) {
             Text("CLR").font(.system(size: 18, weight: .bold, design: .monospaced))
         }
         .buttonStyle(RetroButtonStyle(isSpecial: true))

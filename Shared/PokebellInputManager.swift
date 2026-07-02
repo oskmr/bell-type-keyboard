@@ -134,17 +134,9 @@ final class PokebellInputManager {
         currentCandidate = candidates[next]
     }
 
-    /// Discards the composing text and the pending digit without committing.
-    func clearComposing() {
-        firstDigit = nil
-        currentPreview = ""
-
-        guard !composingText.isEmpty else { return }
-
-        clearComposingState()
-        if isKeyboardExtension {
-            onClearMarkedText?()
-        }
+    /// Commits the composing text as raw kana, ignoring conversion candidates.
+    func confirmRawInput() {
+        commitComposing(composingText)
     }
 
     /// Applies a character transform (dakuten, handakuten, or small kana) to
@@ -195,17 +187,21 @@ final class PokebellInputManager {
     /// manager.confirmInput()
     /// ```
     func confirmInput() {
+        commitComposing(currentCandidate.isEmpty ? composingText : currentCandidate)
+    }
+
+    /// Commits the given text for the current composition and clears the composing state.
+    private func commitComposing(_ text: String) {
         firstDigit = nil
         currentPreview = ""
 
         guard !composingText.isEmpty else { return }
 
-        let commitText = currentCandidate.isEmpty ? composingText : currentCandidate
         if isKeyboardExtension {
-            onCommitText?(commitText)
+            onCommitText?(text)
             onClearMarkedText?()
         } else {
-            inputText += commitText
+            inputText += text
         }
         clearComposingState()
     }

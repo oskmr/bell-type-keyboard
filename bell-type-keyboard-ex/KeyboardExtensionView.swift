@@ -113,8 +113,9 @@ struct KeyboardExtensionView: View {
         .buttonStyle(CompactRetroButtonStyle())
     }
 
+    /// Commits the composing text as raw kana without conversion.
     private var clearKey: some View {
-        Button(action: clearComposing) {
+        Button(action: confirmRawInput) {
             Text("CLR").font(.system(size: 14, weight: .bold, design: .monospaced))
         }
         .buttonStyle(CompactRetroButtonStyle(isSpecial: true))
@@ -162,9 +163,9 @@ struct KeyboardExtensionView: View {
         inputManager.insertSpace()
     }
 
-    private func clearComposing() {
+    private func confirmRawInput() {
         UIDevice.current.playInputClick()
-        inputManager.clearComposing()
+        inputManager.confirmRawInput()
     }
 
     private func applySmallKana() {

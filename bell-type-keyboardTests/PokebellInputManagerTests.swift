@@ -131,7 +131,7 @@ final class PokebellInputManagerTests: XCTestCase {
         XCTAssertEqual(manager.candidates, [])
     }
 
-    func testClearComposingDiscardsWithoutCommit() {
+    func testConfirmRawInputCommitsRawKanaIgnoringCandidates() async {
         let manager = PokebellInputManager(isKeyboardExtension: true, converter: FakeConverter(candidate: "愛"))
 
         var committedText: String?
@@ -141,9 +141,10 @@ final class PokebellInputManagerTests: XCTestCase {
 
         manager.pressKey(1)
         manager.pressKey(1)
-        manager.clearComposing()
+        await waitForCandidates(of: manager)
+        manager.confirmRawInput()
 
-        XCTAssertNil(committedText)
+        XCTAssertEqual(committedText, "あ")
         XCTAssertTrue(cleared)
         XCTAssertEqual(manager.composingText, "")
     }

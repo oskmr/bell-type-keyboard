@@ -40,14 +40,16 @@ struct DemoOutputView: View {
             }
             .padding(.horizontal, 4)
 
-            Text(displayText)
-                .font(.system(size: 20, weight: .medium, design: .monospaced))
-                .foregroundColor(RetroTheme.displayText)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .frame(minHeight: 60)
-                .padding(8)
-                .lineLimit(2)
-                .truncationMode(.tail)
+            ScrollView {
+                Text(displayText)
+                    .font(.system(size: 20, weight: .medium, design: .monospaced))
+                    .foregroundColor(RetroTheme.displayText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(8)
+            }
+            // Keep the latest line visible as text grows past the panel height.
+            .defaultScrollAnchor(.bottom, for: .sizeChanges)
+            .frame(minHeight: 60)
 
             HStack {
                 Text(">> INPUT: [\(previewText)]")

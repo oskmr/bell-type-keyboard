@@ -45,14 +45,21 @@ struct FlickButton: View {
                     x: 0, y: isDragging ? 0.5 : 1
                 )
 
-            if isDragging {
-                flickIndicator
-            } else {
-                defaultLabel
-            }
+            defaultLabel
         }
         .frame(maxWidth: .infinity)
         .frame(height: height)
+        .overlay {
+            if isDragging {
+                GeometryReader { geo in
+                    flickPopup(keySize: geo.size)
+                        .position(x: geo.size.width / 2, y: geo.size.height / 2)
+                }
+                .allowsHitTesting(false)
+            }
+        }
+        // Draw the popup above neighboring keys while pressed.
+        .zIndex(isDragging ? 100 : 0)
         .gesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { value in
@@ -68,9 +75,10 @@ struct FlickButton: View {
                     }
                 }
                 .onEnded { _ in
-                    if let char = character(for: activeDirection) {
-                        onCommit(char)
-                    }
+                    // Fall back to the center character for unassigned directions
+                    // so a slightly moved tap still inputs the main character.
+                    let char = character(for: activeDirection) ?? center
+                    onCommit(char)
                     isDragging = false
                     activeDirection = .center
                 }
@@ -80,54 +88,68 @@ struct FlickButton: View {
     private var defaultLabel: some View {
         VStack(spacing: 1) {
             if let u = up {
-                Text(u)
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(RetroTheme.displayText)
+                hintLabel(u)
             }
-            HStack(spacing: 3) {
+            HStack(spacing: 4) {
                 if let l = left {
-                    Text(l)
-                        .font(.system(size: 8))
-                        .foregroundColor(RetroTheme.displayText.opacity(0.6))
+                    hintLabel(l)
                 }
                 Text(center)
-                    .font(.system(size: 10))
-                    .foregroundColor(RetroTheme.displayText.opacity(0.8))
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(RetroTheme.displayText)
                 if let r = right {
-                    Text(r)
-                        .font(.system(size: 8))
-                        .foregroundColor(RetroTheme.displayText.opacity(0.6))
+                    hintLabel(r)
                 }
             }
+            if let d = down {
+                hintLabel(d)
+            }
         }
     }
 
-    private var flickIndicator: some View {
+    private func hintLabel(_ s: String) -> some View {
+        Text(s)
+            .font(.system(size: 9))
+            .foregroundColor(RetroTheme.displayText.opacity(0.5))
+    }
+
+    /// Renders iOS-style flick petals popping out around the key while pressed.
+    private func flickPopup(keySize: CGSize) -> some View {
         ZStack {
             if let u = up {
-                flickLabel(u, active: activeDirection == .up)
-                    .offset(y: -(height * 0.28))
-            }
-            flickLabel(center, active: activeDirection == .center)
-            if let l = left {
-                flickLabel(l, active: activeDirection == .left)
-                    .offset(x: -18)
-            }
-            if let r = right {
-                flickLabel(r, active: activeDirection == .right)
-                    .offset(x: 18)
+                petal(u, active: activeDirection == .up, size: keySize)
+                    .offset(y: -keySize.height)
             }
             if let d = down {
-                flickLabel(d, active: activeDirection == .down)
-                    .offset(y: height * 0.28)
+                petal(d, active: activeDirection == .down, size: keySize)
+                    .offset(y: keySize.height)
             }
+            if let l = left {
+                petal(l, active: activeDirection == .left, size: keySize)
+                    .offset(x: -keySize.width)
+            }
+            if let r = right {
+                petal(r, active: activeDirection == .right, size: keySize)
+                    .offset(x: keySize.width)
+            }
+            petal(center, active: activeDirection == .center, size: keySize)
         }
     }
 
-    private func flickLabel(_ s: String, active: Bool) -> some View {
+    private func petal(_ s: String, active: Bool, size: CGSize) -> some View {
         Text(s)
-            .font(.system(size: active ? 13 : 9, weight: active ? .bold : .regular))
-            .foregroundColor(active ? RetroTheme.accentGreen : RetroTheme.displayText.opacity(0.5))
+            .font(.system(size: 20, weight: .bold))
+            .foregroundColor(active ? RetroTheme.displayBackground : RetroTheme.displayText)
+            .frame(width: size.width, height: size.height)
+            .background(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .fill(active ? RetroTheme.accentGreen : RetroTheme.buttonHighlight)
+                    .shadow(color: Color.black.opacity(0.5), radius: 3, x: 0, y: 1)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .stroke(RetroTheme.borderColor, lineWidth: borderWidth)
+            )
             .animation(.easeInOut(duration: 0.08), value: active)
     }
 }

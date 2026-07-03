@@ -160,6 +160,36 @@ final class PokebellInputManagerTests: XCTestCase {
         XCTAssertEqual(committedText, "\n")
     }
 
+    func testInsertSymbolConfirmsCompositionFirst() async {
+        let manager = PokebellInputManager(isKeyboardExtension: true, converter: FakeConverter(candidate: "愛"))
+
+        var committedTexts: [String] = []
+        var cleared = false
+        manager.onCommitText = { committedTexts.append($0) }
+        manager.onClearMarkedText = { cleared = true }
+
+        manager.pressKey(1)
+        manager.pressKey(1)
+        await waitForCandidates(of: manager)
+        manager.insertSymbol("。")
+
+        XCTAssertEqual(committedTexts, ["愛", "。"])
+        XCTAssertTrue(cleared)
+        XCTAssertEqual(manager.composingText, "")
+    }
+
+    func testInsertSymbolAppendsAfterCompositionInApp() async {
+        let manager = PokebellInputManager(isKeyboardExtension: false, converter: FakeConverter(candidate: "愛"))
+
+        manager.pressKey(1)
+        manager.pressKey(1)
+        await waitForCandidates(of: manager)
+        manager.insertSymbol("。")
+
+        XCTAssertEqual(manager.inputText, "愛。")
+        XCTAssertEqual(manager.composingText, "")
+    }
+
     func testInsertSpaceCyclesCandidatesWhileComposing() async {
         let manager = PokebellInputManager(isKeyboardExtension: true, converter: FakeConverter(candidate: "愛"))
 

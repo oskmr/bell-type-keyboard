@@ -110,8 +110,12 @@ final class PokebellInputManager {
         }
     }
 
-    /// Inserts the given symbol character.
+    /// Inserts the given symbol character, confirming any composition first
+    /// so the symbol lands after the composed text.
     func insertSymbol(_ char: String) {
+        if !composingText.isEmpty {
+            confirmInput()
+        }
         firstDigit = nil
         currentPreview = ""
         if isKeyboardExtension {

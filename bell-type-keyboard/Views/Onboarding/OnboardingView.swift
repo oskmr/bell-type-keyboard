@@ -14,6 +14,8 @@ import SwiftUI
 /// OnboardingView()
 /// ```
 struct OnboardingView: View {
+    @State private var showSupport = false
+
     /// Renders the onboarding screen layout.
     ///
     /// Example:
@@ -49,10 +51,11 @@ struct OnboardingView: View {
                                     .font(.system(size: 22, weight: .bold, design: .monospaced))
                                     .foregroundColor(RetroTheme.accentGreen)
                                 Spacer()
-                                Text("■")
-                                    .font(.system(size: 20, design: .monospaced))
-                                    .foregroundColor(RetroTheme.accentGreen)
-                                    .opacity(0.6)
+                                Button(action: { showSupport = true }) {
+                                    Image(systemName: "gearshape.fill")
+                                        .font(.system(size: 20))
+                                        .foregroundColor(RetroTheme.accentGreen)
+                                }
                             }
                             .padding(.horizontal)
                             .padding(.top, 32)
@@ -103,6 +106,9 @@ struct OnboardingView: View {
                 }
             )
             .background(RetroTheme.bodyBackground.ignoresSafeArea())
+            .sheet(isPresented: $showSupport) {
+                SupportView()
+            }
     }
 }
 

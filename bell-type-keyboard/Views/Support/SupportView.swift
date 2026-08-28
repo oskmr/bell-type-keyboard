@@ -7,7 +7,15 @@
 
 import SwiftUI
 
-/// SupportView renders the support / contact sheet.
+/// A single row in the support list, linking to a web page.
+private struct SupportRow: Identifiable {
+    let id = UUID()
+    let icon: String
+    let title: String
+    let urlString: String
+}
+
+/// SupportView renders the support sheet as a native settings-style list.
 ///
 /// Example:
 /// ```swift
@@ -16,7 +24,23 @@ import SwiftUI
 struct SupportView: View {
     @Environment(\.dismiss) private var dismiss
 
-    private let supportEmail = "cs@fracaso.app"
+    private let rows: [SupportRow] = [
+        SupportRow(
+            icon: "envelope.fill",
+            title: "お問い合わせ",
+            urlString: "https://rhetorical-week-9f7.notion.site/10bff0495cd983638f640141ebdfea50?pvs=105"
+        ),
+        SupportRow(
+            icon: "lock.shield.fill",
+            title: "プライバシーポリシー",
+            urlString: "https://sun-pink-516.notion.site/1bc4c4b711e980ad8975c3fbbaafc27d?source=copy_link"
+        ),
+        SupportRow(
+            icon: "doc.text.fill",
+            title: "利用規約",
+            urlString: "https://sun-pink-516.notion.site/1c54c4b711e98020a28ff182d9d4fd6c?source=copy_link"
+        )
+    ]
 
     /// Renders the support screen layout.
     ///
@@ -25,74 +49,46 @@ struct SupportView: View {
     /// SupportView().body
     /// ```
     var body: some View {
-        RetroTheme.bodyBackground
-            .edgesIgnoringSafeArea(.all)
-            .overlay(
-                VStack(alignment: .leading, spacing: 24) {
-                    HStack {
-                        Text(">> SUPPORT")
-                            .font(.system(size: 22, weight: .bold, design: .monospaced))
-                            .foregroundColor(RetroTheme.accentGreen)
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 32)
-
-                    Button(action: {
-                        if let url = URL(string: "mailto:\(supportEmail)") {
-                            UIApplication.shared.open(url)
-                        }
-                    }) {
-                        HStack(alignment: .top, spacing: 16) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 6)
-                                    .fill(RetroTheme.displayBackground)
-                                    .frame(width: 50, height: 50)
+        NavigationStack {
+            List {
+                Section {
+                    ForEach(rows) { row in
+                        NavigationLink {
+                            WebPageView(title: row.title, urlString: row.urlString)
+                        } label: {
+                            HStack(spacing: 16) {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.primary)
+                                    .frame(width: 32, height: 32)
                                     .overlay(
-                                        RoundedRectangle(cornerRadius: 6)
-                                            .stroke(RetroTheme.accentGreen, lineWidth: 2)
+                                        Image(systemName: row.icon)
+                                            .font(.system(size: 15, weight: .semibold))
+                                            .foregroundColor(Color(.systemBackground))
                                     )
 
-                                Image(systemName: "envelope.fill")
-                                    .font(.system(size: 20))
-                                    .foregroundColor(RetroTheme.accentGreen)
+                                Text(row.title)
+                                    .font(.system(size: 17, weight: .semibold))
                             }
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("お問い合わせ")
-                                    .font(.system(size: 16, weight: .semibold, design: .monospaced))
-                                    .foregroundColor(RetroTheme.displayText)
-
-                                Text(supportEmail)
-                                    .font(.system(size: 14, design: .monospaced))
-                                    .foregroundColor(RetroTheme.displayTextDim)
-                            }
-
-                            Spacer()
-
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 14))
-                                .foregroundColor(RetroTheme.displayTextDim)
-                        }
-                        .padding(.horizontal)
-                    }
-                    .buttonStyle(.plain)
-
-                    Spacer()
-
-                    Button(action: { dismiss() }) {
-                        HStack {
-                            Text("[")
-                            Text("CLOSE")
-                            Text("]")
+                            .padding(.vertical, 6)
                         }
                     }
-                    .buttonStyle(RetroButtonStyle())
-                    .padding(.horizontal)
-                    .padding(.bottom, 20)
                 }
-            )
-            .background(RetroTheme.bodyBackground.ignoresSafeArea())
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle("サポート")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundColor(.primary)
+                            .frame(width: 30, height: 30)
+                            .background(Circle().fill(Color(.systemGray5)))
+                    }
+                }
+            }
+        }
     }
 }
 

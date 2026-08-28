@@ -14,6 +14,7 @@ import SwiftUI
 /// SupportView()
 /// ```
 struct SupportView: View {
+    private let contactFormURL = "https://rhetorical-week-9f7.notion.site/10bff0495cd983638f640141ebdfea50?pvs=105"
     private let privacyPolicyURL = "https://sun-pink-516.notion.site/1bc4c4b711e980ad8975c3fbbaafc27d?source=copy_link"
     private let termsOfServiceURL = "https://sun-pink-516.notion.site/1c54c4b711e98020a28ff182d9d4fd6c?source=copy_link"
 
@@ -30,7 +31,7 @@ struct SupportView: View {
             List {
                 Section {
                     NavigationLink {
-                        ContactFormView()
+                        WebPageView(title: "お問い合わせ", urlString: contactFormURL)
                     } label: {
                         rowLabel(icon: "envelope.fill", title: "お問い合わせ")
                     }

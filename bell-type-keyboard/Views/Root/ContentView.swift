@@ -29,7 +29,7 @@ struct ContentView: View {
         TabView {
             OnboardingView()
                 .tabItem {
-                    Label("SETUP", systemImage: "gearshape.fill")
+                    Label("HOME", systemImage: "house.fill")
                 }
 
             KeyMapView()

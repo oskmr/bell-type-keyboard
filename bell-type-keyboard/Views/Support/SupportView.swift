@@ -15,7 +15,7 @@ import SwiftUI
 /// ```
 struct SupportView: View {
     private let contactFormURL = "https://rhetorical-week-9f7.notion.site/10bff0495cd983638f640141ebdfea50?pvs=105"
-    private let privacyPolicyURL = "https://sun-pink-516.notion.site/1bc4c4b711e980ad8975c3fbbaafc27d?source=copy_link"
+    private let privacyPolicyURL = "https://rhetorical-week-9f7.notion.site/3ccff0495cd9802dbb53f14a69773799?source=copy_link"
     private let termsOfServiceURL = "https://rhetorical-week-9f7.notion.site/3ccff0495cd9808a866fc925da43417b?source=copy_link"
 
     @Environment(\.dismiss) private var dismiss

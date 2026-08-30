@@ -75,6 +75,11 @@
 			path = "bell-type-keyboard-ex";
 			sourceTree = "<group>";
 		};
+		CB4940B02F2AF9AA00AD5DB7 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +107,7 @@
 			children = (
 				CB4940602F2A8B5500AD5DB7 /* bell-type-keyboard */,
 				CB4940A22F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */,
+				CB4940B02F2AF9AA00AD5DB7 /* Shared */,
 				CB49405F2F2A8B5500AD5DB7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,6 +140,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				CB4940602F2A8B5500AD5DB7 /* bell-type-keyboard */,
+				CB4940B02F2AF9AA00AD5DB7 /* Shared */,
 			);
 			name = "bell-type-keyboard";
 			packageProductDependencies = (
@@ -157,6 +164,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				CB4940A22F2AF5AF00AD5DB7 /* bell-type-keyboard-ex */,
+				CB4940B02F2AF9AA00AD5DB7 /* Shared */,
 			);
 			name = "bell-type-keyboard-ex";
 			packageProductDependencies = (
@@ -394,7 +402,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miseri.bell-type-keyboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -434,7 +442,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miseri.bell-type-keyboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -454,6 +462,7 @@
 		CB4940AA2F2AF5AF00AD5DB7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 62R8899FU5;
@@ -469,6 +478,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miseri.bell-type-keyboard.ex";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -486,6 +496,7 @@
 		CB4940AB2F2AF5AF00AD5DB7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 62R8899FU5;
@@ -501,6 +512,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.miseri.bell-type-keyboard.ex";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

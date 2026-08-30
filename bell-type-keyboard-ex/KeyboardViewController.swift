@@ -47,10 +47,6 @@ class KeyboardViewController: UIInputViewController {
         inputAssistantItem.leadingBarButtonGroups = []
         inputAssistantItem.trailingBarButtonGroups = []
 
-        inputManager.onTextChange = { [weak self] text in
-            self?.textDocumentProxy.insertText(text)
-        }
-
         inputManager.onMarkedTextChange = { [weak self] text in
             let selectedRange = NSRange(location: text.count, length: 0)
             self?.textDocumentProxy.setMarkedText(text, selectedRange: selectedRange)

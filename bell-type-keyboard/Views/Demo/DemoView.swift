@@ -14,7 +14,7 @@ import SwiftUI
 /// DemoView()
 /// ```
 struct DemoView: View {
-    @StateObject private var inputManager = PokebellInputManager(converter: KanaKanjiConverterService())
+    @State private var inputManager = PokebellInputManager(converter: KanaKanjiConverterService())
 
     /// Renders the demo layout and binds it to the input manager.
     ///
@@ -38,7 +38,10 @@ struct DemoView: View {
                 .padding(.top, 40)
                 .padding(.horizontal)
 
-                PredictionBarView(candidates: inputManager.candidates) { candidate in
+                PredictionBarView(
+                    candidates: inputManager.candidates,
+                    selectedIndex: inputManager.selectedCandidateIndex
+                ) { candidate in
                     inputManager.selectCandidate(candidate)
                 }
                 .padding(.horizontal)
@@ -58,4 +61,8 @@ struct DemoView: View {
         }
         .background(RetroTheme.bodyBackground)
     }
+}
+
+#Preview {
+    DemoView()
 }

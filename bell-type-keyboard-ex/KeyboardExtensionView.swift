@@ -14,77 +14,181 @@ import SwiftUI
 /// KeyboardExtensionView(inputManager: PokebellInputManager(isKeyboardExtension: true))
 /// ```
 struct KeyboardExtensionView: View {
-    @ObservedObject var inputManager: PokebellInputManager
+    var inputManager: PokebellInputManager
 
-    let buttons: [[Int]] = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9]
-    ]
+    private var isComposing: Bool {
+        !inputManager.composingText.isEmpty
+    }
 
     /// Renders the keyboard layout with optional prediction candidates.
-    ///
-    /// Example:
-    /// ```swift
-    /// KeyboardExtensionView(inputManager: PokebellInputManager(isKeyboardExtension: true)).body
-    /// ```
     var body: some View {
         VStack(spacing: 0) {
-            PredictionBarView(candidates: inputManager.candidates) { candidate in
-                inputManager.selectCandidate(candidate)
-            }
-            .background(Color.clear)
-            .frame(height: 34)
-            .layoutPriority(1)
-            .fixedSize(horizontal: false, vertical: true)
+            statusBar
+                .frame(height: 34)
+                .layoutPriority(1)
+                .fixedSize(horizontal: false, vertical: true)
 
             VStack(spacing: 4) {
-                ForEach(buttons, id: \.self) { row in
-                    HStack(spacing: 4) {
-                        ForEach(row, id: \.self) { number in
-                            Button(action: {
-                                inputManager.pressKey(number)
-                            }) {
-                                Text("\(number)")
-                                    .font(.system(size: 24, weight: .bold, design: .monospaced))
-                            }
-                            .buttonStyle(CompactRetroButtonStyle())
-                        }
-                    }
-                }
-
                 HStack(spacing: 4) {
-                    Button(action: {
-                        inputManager.deleteLastCharacter()
-                    }) {
-                        HStack(spacing: 2) {
-                            Image(systemName: "delete.left")
-                                .font(.system(size: 14))
-                        }
-                    }
-                    .buttonStyle(CompactRetroButtonStyle())
-
-                    Button(action: {
-                        inputManager.pressKey(0)
-                    }) {
-                        Text("0")
-                            .font(.system(size: 24, weight: .bold, design: .monospaced))
-                    }
-                    .buttonStyle(CompactRetroButtonStyle())
-
-                    Button(action: {
-                        inputManager.confirmInput()
-                    }) {
-                        Text("CLR")
-                            .font(.system(size: 14, weight: .bold, design: .monospaced))
-                    }
-                    .buttonStyle(CompactRetroButtonStyle(isSpecial: true))
+                    digitKey(1)
+                    digitKey(2)
+                    digitKey(3)
+                    deleteKey
                 }
-
+                HStack(spacing: 4) {
+                    digitKey(4)
+                    digitKey(5)
+                    digitKey(6)
+                    spaceKey
+                }
+                HStack(spacing: 4) {
+                    digitKey(7)
+                    digitKey(8)
+                    digitKey(9)
+                    clearKey
+                }
+                HStack(spacing: 4) {
+                    smallKanaKey
+                    digitKey(0)
+                    symbolKey
+                    primaryKey
+                }
             }
-            .background(RetroTheme.bodyBackground)
+            .background(RetroTheme.keyboardBackground)
         }
         .background(Color.clear)
         .ignoresSafeArea()
+    }
+
+    /// Shows the pending digit preview alongside the prediction candidates.
+    private var statusBar: some View {
+        HStack(spacing: 4) {
+            if !inputManager.currentPreview.isEmpty {
+                Text(inputManager.currentPreview)
+                    .font(.system(size: 14, weight: .bold, design: .monospaced))
+                    .foregroundColor(RetroTheme.accentGreen)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 6)
+                    .background(RetroTheme.displayBackground)
+                    .cornerRadius(8)
+                    .padding(.leading, 6)
+            }
+            PredictionBarView(
+                candidates: inputManager.candidates,
+                selectedIndex: inputManager.selectedCandidateIndex
+            ) { candidate in
+                selectCandidate(candidate)
+            }
+        }
+        .background(Color.clear)
+    }
+
+    private func digitKey(_ key: Int) -> some View {
+        Button(action: { pressKey(key) }) {
+            Text("\(key)").font(.system(size: 24, weight: .bold, design: .monospaced))
+        }
+        .buttonStyle(CompactRetroButtonStyle())
+    }
+
+    private var deleteKey: some View {
+        Button(action: deleteLastCharacter) {
+            Label("削除", systemImage: "delete.left")
+                .labelStyle(.iconOnly)
+                .font(.system(size: 14))
+        }
+        .buttonStyle(CompactRetroButtonStyle())
+        .buttonRepeatBehavior(.enabled)
+    }
+
+    private var spaceKey: some View {
+        Button(action: insertSpace) {
+            if isComposing {
+                Text("次候補").font(.system(size: 12, weight: .bold))
+            } else {
+                Label("空白", systemImage: "space")
+                    .labelStyle(.iconOnly)
+                    .font(.system(size: 14))
+            }
+        }
+        .buttonStyle(CompactRetroButtonStyle())
+    }
+
+    /// Commits the composing text as raw kana without conversion.
+    private var clearKey: some View {
+        Button(action: confirmRawInput) {
+            Text("CLR").font(.system(size: 14, weight: .bold, design: .monospaced))
+        }
+        .buttonStyle(CompactRetroButtonStyle(isSpecial: true))
+    }
+
+    private var smallKanaKey: some View {
+        Button(action: applySmallKana) {
+            Text("小").font(.system(size: 18, weight: .bold))
+        }
+        .buttonStyle(CompactRetroButtonStyle())
+    }
+
+    private var symbolKey: some View {
+        FlickButton(
+            center: "。",
+            up: "？",
+            left: "、",
+            right: "！",
+            height: 42
+        ) { char in
+            insertSymbol(char)
+        }
+    }
+
+    /// Confirms the composition while composing; inserts a newline otherwise.
+    private var primaryKey: some View {
+        Button(action: confirmOrNewline) {
+            Text(isComposing ? "確定" : "改行").font(.system(size: 13, weight: .bold))
+        }
+        .buttonStyle(CompactRetroButtonStyle(isSpecial: true))
+    }
+
+    private func pressKey(_ key: Int) {
+        UIDevice.current.playInputClick()
+        inputManager.pressKey(key)
+    }
+
+    private func deleteLastCharacter() {
+        UIDevice.current.playInputClick()
+        inputManager.deleteLastCharacter()
+    }
+
+    private func insertSpace() {
+        UIDevice.current.playInputClick()
+        inputManager.insertSpace()
+    }
+
+    private func confirmRawInput() {
+        UIDevice.current.playInputClick()
+        inputManager.confirmRawInput()
+    }
+
+    private func applySmallKana() {
+        UIDevice.current.playInputClick()
+        inputManager.applySmallKana()
+    }
+
+    private func insertSymbol(_ char: String) {
+        UIDevice.current.playInputClick()
+        inputManager.insertSymbol(char)
+    }
+
+    private func confirmOrNewline() {
+        UIDevice.current.playInputClick()
+        if isComposing {
+            inputManager.confirmInput()
+        } else {
+            inputManager.insertNewline()
+        }
+    }
+
+    private func selectCandidate(_ candidate: String) {
+        UIDevice.current.playInputClick()
+        inputManager.selectCandidate(candidate)
     }
 }

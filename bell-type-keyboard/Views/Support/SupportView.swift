@@ -47,6 +47,12 @@ struct SupportView: View {
                     } label: {
                         rowLabel(icon: "doc.text.fill", title: "利用規約")
                     }
+
+                    NavigationLink {
+                        LicenseView()
+                    } label: {
+                        rowLabel(icon: "doc.plaintext.fill", title: "ライセンス")
+                    }
                 }
             }
             .listStyle(.insetGrouped)
